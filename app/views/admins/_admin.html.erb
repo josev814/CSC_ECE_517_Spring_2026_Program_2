@@ -1,27 +1,13 @@
 <div id="<%= dom_id admin %>">
-  <div>
-    <strong>Id:</strong>
-    <%= admin.id %>
+  <h3>
+    User: <%= admin.username %>
+  </h3>
+
+  <div class="pt-3">
+    <strong>Name:</strong> <%= admin.name %>
   </div>
 
-  <div>
-    <strong>Username:</strong>
-    <%= admin.username %>
+  <div class="pt-3">
+    <strong>Email:</strong> <%= admin.email %>
   </div>
-
-  <div>
-    <strong>Password:</strong>
-    <%= admin.password %>
-  </div>
-
-  <div>
-    <strong>Name:</strong>
-    <%= admin.name %>
-  </div>
-
-  <div>
-    <strong>Email:</strong>
-    <%= admin.email %>
-  </div>
-
 </div>
