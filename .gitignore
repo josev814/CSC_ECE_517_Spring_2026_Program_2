@@ -26,3 +26,4 @@ yarn-debug.log*
 .gem_rbs_collection
 *rbs_collection.lock.yaml
 *rbs_collection.yaml
+tmp/cache/bootsnap/load-path-cache
