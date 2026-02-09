@@ -1,9 +1,19 @@
 class AdminsController < ApplicationController
-  before_action :set_admin, only: %i[ show edit update destroy ]
+  before_action :set_admin, only: %i[ show edit update ]
 
   # GET /admins or /admins.json
   def index
-    @admins = Admin.all
+    @admin = Admin.first
+    respond_to do |format|
+      format.html { render :dashboard }
+    end
+  end
+
+  def dashboard
+    @admin = Admin.first
+    respond_to do |format|
+      format.html { render :dashboard }
+    end
   end
 
   # GET /admins/1 or /admins/1.json
@@ -44,16 +54,6 @@ class AdminsController < ApplicationController
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @admin.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /admins/1 or /admins/1.json
-  def destroy
-    @admin.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to admins_path, notice: "Admin was successfully destroyed.", status: :see_other }
-      format.json { head :no_content }
     end
   end
 
