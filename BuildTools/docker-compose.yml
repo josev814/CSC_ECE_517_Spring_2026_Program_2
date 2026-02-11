@@ -1,0 +1,41 @@
+name: RailsVolunteers
+services:
+    ruby:
+        build:
+            context: ../
+            dockerfile: ./BuildTools/ruby.dockerfile
+            args:
+              RAILS_ENV: ${RAILS_ENV:-development}
+              BUNDLE_PATH: /usr/local/bundle
+        image: rails_volunteers
+        container_name: rails_volunteers
+        restart: unless-stopped
+        environment:
+            COVERAGE: true
+            RUBYMINE_COVERAGE: true
+            RAILS_ENV: ${RAILS_ENV:-development}
+            RAILS_LOG_TO_STDOUT: true
+            RAILS_SERVE_STATIC_FILES: true
+            DOCKER: true
+        ports:
+          - "${RAILS_PORT:-3000}:3000"
+        logging:
+            options:
+                max-size: "10m"
+                max-file: "3"
+#        command:
+#        - '/usr/bin/sleep'
+#        - 'infinity'
+        # map local dir when not using watch
+        volumes:
+          - ../:/opt/project:cache
+        networks:
+            - public
+            - private
+
+networks:
+    public:
+    private:
+
+volumes:
+  gem_bundles:

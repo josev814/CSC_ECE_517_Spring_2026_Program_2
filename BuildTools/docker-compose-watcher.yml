@@ -1,0 +1,23 @@
+name: RailsVolunteers
+services:
+    ruby:
+        volumes: !reset
+          -
+        develop:
+            watch:
+            - path: ../package.json
+              action: rebuild
+            - path: ../Gemfile
+              action: rebuild
+            - path: ./BuildTools
+              action: rebuild
+            - path: ./
+              action: rebuild
+            - path: ../db/seeds.rb
+              action: rebuild
+            - path: ../app
+              action: sync
+              target: /opt/project/app
+            - path: ../public
+              action: sync
+              target: /opt/project/public

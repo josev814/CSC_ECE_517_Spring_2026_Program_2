@@ -117,6 +117,8 @@ GEM
     faker (3.6.0)
       i18n (>= 1.8.11, < 2)
     ffi (1.17.3-arm64-darwin)
+    faker (3.6.0)
+      i18n (>= 1.8.11, < 2)
     ffi (1.17.3-x64-mingw-ucrt)
     ffi (1.17.3-x86_64-linux-gnu)
     fugit (1.12.1)
@@ -213,6 +215,9 @@ GEM
     public_suffix (7.0.2)
     puma (7.2.0)
       nio4r (~> 2.0)
+    puma-status (1.7)
+      net_http_unix (~> 0.2)
+      parallel (~> 1)
     raabro (1.4.0)
     racc (1.8.1)
     rack (3.2.4)
@@ -370,8 +375,8 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  bootsnap (~> 1.22)
   bcrypt (~> 3.1.7)
-  bootsnap
   brakeman
   bundler-audit
   capybara
@@ -382,14 +387,15 @@ DEPENDENCIES
   jbuilder
   kamal
   propshaft
-  puma (>= 5.0)
+  puma (~> 7.2.0)
+  puma-status (~> 1.7)
   rails (~> 8.1.2)
   rubocop-rails-omakase
   selenium-webdriver
   solid_cable
   solid_cache
   solid_queue
-  sqlite3 (>= 2.1)
+  sqlite3 (~> 2.9)
   stimulus-rails
   thruster
   turbo-rails
