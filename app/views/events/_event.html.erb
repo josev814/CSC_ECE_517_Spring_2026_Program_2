@@ -1,0 +1,31 @@
+<div id="<%= dom_id event %>">
+    <div>
+        <strong>Event Title:</strong>
+        <%= link_to event.title, event %>
+    </div>
+
+    <div>
+        <strong>Event Date:</strong>
+        <%= event.event_date %>
+    </div>
+
+    <div>
+        <strong>Event Time:</strong>
+        <%= event.event_time %>
+    </div>
+
+    <div>
+        <strong>Event Location:</strong>
+        <%= event.location %>
+    </div>
+
+    <div>
+        <strong>Event Status:</strong>
+        <%= event.status %>
+    </div>
+
+    <div>
+        <strong>Volunteers Needed:</strong>
+        <%= event.required_volunteers %>
+    </div>
+</div>
