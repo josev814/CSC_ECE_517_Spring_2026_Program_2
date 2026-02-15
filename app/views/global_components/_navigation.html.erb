@@ -16,10 +16,10 @@
                 </ul>
                 <div class="text-end">
                     <%=
-                    if @volunteer.nil? || @admin.nil?
-                        render partial: 'home/components/notsignedin'
+                    if @volunteer.nil? && @admin.nil?
+                        render partial: 'global_components/notsignedin'
                     else
-                        render partial: 'home/components/signedin'
+                        render partial: 'global_components/signedin'
                     end
                     %>
                 </div>

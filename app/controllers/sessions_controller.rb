@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
     @volunteer = Volunteer.authenticate_by(username:params_sess['username'], password: params_sess['password'])
     if @volunteer
       session[:user_id] = @volunteer.id
-      redirect_to volunteers_path
+      redirect_to root_path
       return
     end
     flash.now[:alert] = "Invalid Credentials"

@@ -26,7 +26,9 @@
   </head>
 
   <body>
-    <%= render partial: 'global_components/alerts' %>
-    <%= yield %>
+    <div class="container-fluid col-12">
+      <%= render partial: 'global_components/alerts' %>
+      <%= yield %>
+    </div>
   </body>
 </html>
