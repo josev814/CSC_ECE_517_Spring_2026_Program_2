@@ -41,4 +41,34 @@ Admin.new(
   username: fake_admin[:username],
   password: fake_admin[:password]
 ).save
-# Admin.create!(admin)
+
+puts "Generating Volunteers"
+
+Volunteer.destroy_all
+# destroy_all doesn't reset the pk
+sqlite_primarykey_reset!(Volunteer.table_name)
+(0..Faker::Number.within(range: 2..10)).to_a.each do |person|
+  volunteer = Faker::Internet.user('username', 'password')
+  skills = []
+  (0..Faker::Number.within(range: 2..4)).to_a.each do |i|
+    if i.modulo(2).eql?(0)
+      skills.push(Faker::Hobby.activity)
+    else
+      skills.push(Faker::Job.key_skill)
+    end
+  end
+
+  skills.uniq!
+  puts "Volunteer #{person} Credentials: #{volunteer}"
+
+  volunteer.merge!({
+    full_name: Faker::Name.name,
+    email: "#{volunteer[:username]}@ncsu.edu",
+    phone_number: Faker::PhoneNumber.phone_number,
+    address: Faker::Address.full_address,
+    skills_interests: skills.to_json
+  })
+  Volunteer.new(
+    volunteer
+  ).save
+end
