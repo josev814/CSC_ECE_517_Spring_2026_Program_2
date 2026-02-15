@@ -1,0 +1,10 @@
+<div class="container-fluid col-12">
+    <h1>Volunteer For An Event</h1>
+    <p>Volunteer for an event and help out your community</p>
+    <%= render partial: 'home/components/navigation' %>
+    <% unless notice.nil? %>
+    <div class="alert alert-success" id=”notice”>
+        <%=  notice  %>
+    </div>
+    <%  end %>
+</div>

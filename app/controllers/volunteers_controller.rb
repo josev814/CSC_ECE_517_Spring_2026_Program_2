@@ -3,6 +3,9 @@ class VolunteersController < ApplicationController
 
   # GET /volunteers or /volunteers.json
   def index
+    if not session.has_key?(:admin_id)
+      redirect_to root_path, alert: "You do not have access to that page"
+    end
     @volunteers = Volunteer.all
   end
 

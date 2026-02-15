@@ -1,16 +1,9 @@
 <p style="color: green"><%= notice %></p>
 
-<% content_for :title, "Admins" %>
-
-<h1>Admin Login</h1>
+<% content_for :title, "Dashboard" %>
 
 <div id="admins">
-  <% @admins.each do |admin| %>
-    <%= render admin %>
-    <p>
-      <%= link_to "Show this admin", admin %>
-    </p>
-  <% end %>
+    <div class="widget" id="top_volunteers">
+        Top Volunteers
+    </div>
 </div>
-
-<%= link_to "New admin", new_admin_path %>

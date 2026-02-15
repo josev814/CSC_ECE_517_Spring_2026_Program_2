@@ -26,8 +26,8 @@
     <%= form.text_field :email, class: 'form-control', required: 'true' %>
   </div>
 
-  <div class="my-3">
-    <%= form.submit class: 'btn btn-primary' %>
-    <%= button_to 'Cancel', @admin, class: 'btn btn-danger' %>
+  <div class="my-3 col-12">
+    <%= form.submit class: 'btn btn-primary col-5' %>
+    <%= link_to 'Cancel', @admin, class: 'btn btn-danger col-5' %>
   </div>
 <% end %>
