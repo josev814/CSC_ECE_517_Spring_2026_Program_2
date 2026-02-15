@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_09_235648) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_14_143602) do
   create_table "admins", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email"
@@ -33,6 +33,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_09_235648) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "volunteer_assignments", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.date "date_logged"
+    t.integer "event_id", null: false
+    t.float "hours_worked"
+    t.string "status"
+    t.datetime "updated_at", null: false
+    t.integer "volunteer_id", null: false
+    t.index ["event_id"], name: "index_volunteer_assignments_on_event_id"
+    t.index ["volunteer_id"], name: "index_volunteer_assignments_on_volunteer_id"
+  end
+
   create_table "volunteers", force: :cascade do |t|
     t.string "address"
     t.datetime "created_at", null: false
@@ -44,4 +56,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_09_235648) do
     t.datetime "updated_at", null: false
     t.string "username"
   end
+
+  add_foreign_key "volunteer_assignments", "events"
+  add_foreign_key "volunteer_assignments", "volunteers"
 end

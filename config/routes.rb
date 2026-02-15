@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :volunteer_assignments
   root 'home#index'
   resources :volunteers
   resources :admins
