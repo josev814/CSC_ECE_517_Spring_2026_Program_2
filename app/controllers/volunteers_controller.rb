@@ -68,6 +68,6 @@ class VolunteersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def volunteer_params
-      params.expect(volunteer: [ :username, :full_name, :email, :phone_number, :address, :skills_interests, :password_digest ])
+      params.expect(volunteer: [ :username, :full_name, :email, :phone_number, :address, :skills_interests, :password, :password_confirmation ])
     end
 end

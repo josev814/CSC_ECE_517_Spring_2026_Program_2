@@ -108,6 +108,9 @@ GEM
       irb (~> 1.10)
       reline (>= 0.3.8)
     dotenv (3.2.0)
+    dotenv-rails (3.2.0)
+      dotenv (= 3.2.0)
+      railties (>= 6.1)
     drb (2.2.3)
     ed25519 (1.4.0)
     erb (6.0.1)
@@ -117,8 +120,6 @@ GEM
     faker (3.6.0)
       i18n (>= 1.8.11, < 2)
     ffi (1.17.3-arm64-darwin)
-    faker (3.6.0)
-      i18n (>= 1.8.11, < 2)
     ffi (1.17.3-x64-mingw-ucrt)
     ffi (1.17.3-x86_64-linux-gnu)
     fugit (1.12.1)
@@ -189,6 +190,7 @@ GEM
     net-smtp (0.5.1)
       net-protocol
     net-ssh (7.3.0)
+    net_http_unix (0.2.2)
     nio4r (2.7.5)
     nokogiri (1.19.0-arm64-darwin)
       racc (~> 1.4)
@@ -370,17 +372,19 @@ GEM
     zeitwerk (2.7.4)
 
 PLATFORMS
+  arm64-darwin-23
   arm64-darwin-25
   x64-mingw-ucrt
   x86_64-linux
 
 DEPENDENCIES
-  bootsnap (~> 1.22)
   bcrypt (~> 3.1.7)
+  bootsnap (~> 1.22)
   brakeman
   bundler-audit
   capybara
   debug
+  dotenv-rails (~> 3.2)
   faker (~> 3.6.0)
   image_processing (~> 1.2)
   importmap-rails
@@ -401,6 +405,9 @@ DEPENDENCIES
   turbo-rails
   tzinfo-data
   web-console
+
+RUBY VERSION
+   ruby 3.4.8p72
 
 BUNDLED WITH
    2.6.9
