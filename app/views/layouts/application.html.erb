@@ -27,8 +27,17 @@
 
   <body>
     <div class="container-fluid col-12">
-      <%= render partial: 'global_components/alerts' %>
-      <%= yield %>
+        <h1><%= content_for?(:title) ? yield(:title) : 'Volunteer For An Event' %></h1>
+        <p><%= content_for?(:title) ? yield(:subtitle) : '' %></p>
+        <%=
+            nav_bar = 'global_components/navigation'
+            if is_admin?
+                nav_bar = 'admins/components/navigation'
+            end
+            render partial: nav_bar
+        %>
+        <%= render partial: 'global_components/alerts' %>
+        <%= yield %>
     </div>
   </body>
 </html>

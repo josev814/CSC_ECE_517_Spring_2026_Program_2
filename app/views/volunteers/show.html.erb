@@ -1,10 +1,19 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, "Volunteer #{@volunteer.id}: #{@volunteer.username}" -%>
+
+<div>
+    <%= link_to "Edit", edit_volunteer_path(@volunteer), class: 'btn btn-primary' %>
+</div>
 
 <%= render @volunteer %>
 
-<div>
-  <%= link_to "Edit this volunteer", edit_volunteer_path(@volunteer) %> |
-  <%= link_to "Back to volunteers", volunteers_path %>
-
-  <%= button_to "Destroy this volunteer", @volunteer, method: :delete %>
-</div>
+<%
+    # this creates a form that submits to the method delete
+%>
+<%= button_to "Delete Account",
+  @volunteer,
+  method: :delete,
+  class: 'btn btn-danger',
+  form: { data: {
+      turbo_confirm: 'Are you sure?'
+  } }
+%>

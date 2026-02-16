@@ -27,9 +27,12 @@
   </head>
 
   <body>
-    <%= render partial: "global_components/alerts" %>
     <h1>Volunteer Management</h1>
     <%= render partial: "admins/components/navigation" %>
+    <%= render partial: "global_components/alerts" %>
+    <% if :title %>
+      <h2><%= yield :title %></h2>
+    <% end %>
     <%= yield %>
   </body>
 </html>

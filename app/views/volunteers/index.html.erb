@@ -1,16 +1,8 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Volunteers" %>
 
-<h1>Volunteers</h1>
-
-<div id="volunteers">
-  <% @volunteers.each do |volunteer| %>
-    <%= render volunteer %>
-    <p>
-      <%= link_to "Show this volunteer", volunteer %>
-    </p>
-  <% end %>
+<div id="volunteers" class="col-12 justify-content-left">
+    <%= link_to new_volunteer_path, class: 'btn btn-primary' do %>
+        <i class="bi bi-plus-circle-fill"></i> New Volunteer
+    <% end %>
+    <%= render partial: 'volunteers/volunteer_list' %>
 </div>
-
-<%= link_to "New volunteer", new_volunteer_path %>

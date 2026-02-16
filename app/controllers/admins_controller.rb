@@ -1,5 +1,5 @@
 class AdminsController < ApplicationController
-  before_action :set_admin, only: %i[ index show edit update ]
+  before_action :admin_access_only, only: %i[ index show edit update ]
 
   # GET /admins or /admins.json
   def index
@@ -47,13 +47,6 @@ class AdminsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_admin
-      @admin ||= Admin.find_by(id: session[:admin_id])
-      if @admin.nil?
-        redirect_to login_path, alert: "You need to login to continue."
-      end
-    end
 
     # Only allow a list of trusted parameters through.
     def admin_params
