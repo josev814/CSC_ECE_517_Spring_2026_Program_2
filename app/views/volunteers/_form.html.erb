@@ -12,9 +12,12 @@
           </ul>
         </div>
       <% end %>
+
       <div class="my-3">
-        <%= form.label :username, class: 'form-label' %>
-        <%= form.text_field :username, class: 'form-control' %>
+        <%= form.label :username %>
+        <%= form.text_field :username,
+              class: "form-control",
+              disabled: !@volunteer.new_record? %>
       </div>
 
       <div class="my-3">

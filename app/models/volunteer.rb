@@ -1,6 +1,7 @@
 class Volunteer < ApplicationRecord
     # Associations
     has_secure_password
+    attr_readonly :username
     has_many :volunteer_assignments, dependent: :destroy
     has_many :events, through: :volunteer_assignments
 
