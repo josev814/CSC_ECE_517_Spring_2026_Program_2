@@ -8,7 +8,9 @@ class Event < ApplicationRecord
   validates :start_time, :status, presence: true
   validates :required_volunteers, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :end_time, presence: true,
-            comparison: { greater_than: :start_time }, unless: -> { start_time.nil? || end_time.nil? }
+            comparison: { greater_than: :start_time,
+            message: ->(record, data) { "must be set after the selected start time of #{record.start_time.strftime("%I:%M %p")}" },
+            unless: -> { start_time.nil? || end_time.nil? } }
   # Prevent duplicate events with same event details
   validates :title, uniqueness: {
     scope: [ :title, :event_date, :start_time, :end_time, :location ],
