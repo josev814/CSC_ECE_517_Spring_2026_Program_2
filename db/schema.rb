@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_14_143602) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_15_225800) do
   create_table "admins", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email"
@@ -28,7 +28,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_14_143602) do
     t.string "location"
     t.integer "required_volunteers"
     t.time "start_time"
-    t.integer "status"
+    t.integer "status", default: 0
     t.string "title"
     t.datetime "updated_at", null: false
   end

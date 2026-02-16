@@ -31,6 +31,7 @@ class VolunteerAssignmentsController < ApplicationController
         format.html { redirect_to @volunteer_assignment, notice: "Volunteer assignment was successfully created." }
         format.json { render :show, status: :created, location: @volunteer_assignment }
       else
+        load_collections
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @volunteer_assignment.errors, status: :unprocessable_entity }
       end

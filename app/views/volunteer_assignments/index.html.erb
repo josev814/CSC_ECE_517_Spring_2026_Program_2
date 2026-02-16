@@ -1,16 +1,12 @@
-<p style="color: green"><%= notice %></p>
+<h3>Volunteer assignments</h3>
 
-<% content_for :title, "Volunteer assignments" %>
-
-<h1>Volunteer assignments</h1>
-
-<div id="volunteer_assignments">
-  <% @volunteer_assignments.each do |volunteer_assignment| %>
-    <%= render volunteer_assignment %>
-    <p>
-      <%= link_to "Show this volunteer assignment", volunteer_assignment %>
-    </p>
-  <% end %>
+<div id="volunteer_assignments" class="col-12 justify-content-left">
+    <%= link_to new_volunteer_assignment_path, class: 'btn btn-primary' do %>
+        <i class="bi bi-plus-circle-fill"></i> New Volunteer Assignment
+    <% end %>
+    <% if @volunteer_assignments.nil? %>
+    No Volunteer Assignments Found
+    <% else %>
+    <%= render partial: 'volunteer_assignments/assignments_list' %>
+    <% end %>
 </div>
-
-<%= link_to "New volunteer assignment", new_volunteer_assignment_path %>

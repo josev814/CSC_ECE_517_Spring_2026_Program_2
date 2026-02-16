@@ -72,3 +72,27 @@ sqlite_primarykey_reset!(Volunteer.table_name)
     volunteer
   ).save
 end
+
+puts "Generating Events"
+
+Event.destroy_all
+# destroy_all doesn't reset the pk
+sqlite_primarykey_reset!(Event.table_name)
+
+(0..Faker::Number.within(range: 2..10)).to_a.each do |_|
+  lang = Faker::ProgrammingLanguage.name
+  event_date = Faker::Date.forward(days: 90)
+  start_time = Faker::Time.between_dates(from: event_date, to: event_date, period: :morning)
+  end_time = Faker::Time.between_dates(from: event_date, to: event_date, period: :afternoon)
+  event_data = {
+    title: "Tutoring for #{lang}",
+    description: "Tutor individuals in the #{lang} programming language",
+    location: Faker::University.name,
+    event_date: event_date,
+    start_time: start_time,
+    end_time: end_time,
+    required_volunteers: Faker::Number.within(range: 2..5)
+  }
+  puts event_data
+  Event.new(event_data).save
+end
