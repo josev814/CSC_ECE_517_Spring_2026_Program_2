@@ -1,18 +1,21 @@
 Rails.application.routes.draw do
   resources :volunteer_assignments
-  root 'home#index'
+  root "home#index"
   resources :volunteers
   resources :admins
-  resources :events
+  resources :events do
+    post :volunteer, on: :member
+    delete :unvolunteer, on: :member
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  resources :sessions, only: [:new, :create, :destroy]
-  get 'signup', to: "volunteers#new"
-  get 'login', to: "sessions#new"
-  post 'login', to: "sessions#create"
-  get 'logout', to: "sessions#destroy"
-  post 'logout', to: "sessions#destroy"
-  delete 'logout', to: "sessions#destroy"
+  resources :sessions, only: [ :new, :create, :destroy ]
+  get "signup", to: "volunteers#new"
+  get "login", to: "sessions#new"
+  post "login", to: "sessions#create"
+  get "logout", to: "sessions#destroy"
+  post "logout", to: "sessions#destroy"
+  delete "logout", to: "sessions#destroy"
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

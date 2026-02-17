@@ -1,9 +1,14 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: %i[ show edit update destroy ]
+  before_action :set_event, only: %i[ show edit update destroy volunteer unvolunteer ]
+  before_action :require_volunteer, only: %i[ volunteer unvolunteer ]
 
   # GET /events or /events.json
   def index
-    @events = Event.order(event_date: :asc, start_time: :asc)
+    @events = Event.includes(:volunteer_assignments).order(event_date: :asc, start_time: :asc)
+
+    if @volunteer.present?
+      @volunteer_assignments = @volunteer.volunteer_assignments.where(event_id: @events.select(:id)).index_by(&:event_id)
+    end
   end
 
   # GET /events/1 or /events/1.json
@@ -57,11 +62,30 @@ class EventsController < ApplicationController
     end
   end
 
+  # POST /events/1/volunteer
+  def volunteer
+    result = @event.volunteer_for(@volunteer)
+    redirect_to event_path(@event), notice: result[:notice], alert: result[:alert]
+  end
+
+  # POST /events/1/unvolunteer
+  def unvolunteer
+    result = @event.unvolunteer_for(@volunteer)
+    redirect_to event_path(@event), notice: result[:notice], alert: result[:alert]
+  end
+
   private
 
     # Use callbacks to share common setup or constraints between actions.
     def set_event
       @event = Event.find(params[:id])
+    end
+
+    # Ensure the user is logged in as a volunteer before allowing volunteer or unvolunteer
+    def require_volunteer
+      return if @volunteer.present?
+
+      redirect_to login_path, alert: "You must be logged in as a volunteer to perform this action."
     end
 
     # Only allow a list of trusted parameters through.

@@ -1,6 +1,8 @@
-<h1>Events</h1>
+<h3>Events</h3>
 
-<% content_for :title, "Events" %>
+<% if @events.none?(&:open?) %>
+  <p class="text-danger">There are no events open for signup at this time. Check back soon! </p>
+<% end %>
 
 <div id="events">
   <% @events.each do |event| %>
