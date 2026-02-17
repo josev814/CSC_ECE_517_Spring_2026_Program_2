@@ -1,64 +1,76 @@
 <div class="container-fluid justify-content-start">
     <div class="col-sm-4 col-12 ">
-    <%= form_with(model: volunteer) do |form| %>
-      <% if volunteer.errors.any? %>
-        <div style="color: red">
-          <h2><%= pluralize(volunteer.errors.count, "error") %> prohibited this volunteer from being saved:</h2>
+        <%= form_with(model: volunteer) do |form| %>
+            <% if volunteer.errors.any? %>
+                <div style="color: red">
+                    <h2><%= pluralize(volunteer.errors.count, "error") %> prohibited this volunteer from being
+                        saved:</h2>
 
-          <ul>
-            <% volunteer.errors.each do |error| %>
-              <li><%= error.full_message %></li>
+                    <ul>
+                        <% volunteer.errors.each do |error| %>
+                            <li><%= error.full_message %></li>
+                        <% end %>
+                    </ul>
+                </div>
             <% end %>
-          </ul>
-        </div>
-      <% end %>
 
-      <div class="my-3">
-        <%= form.label :username %>
-        <%= form.text_field :username,
-              class: "form-control",
-              disabled: !@volunteer.new_record? %>
-      </div>
+            <div class="row my-3">
+                <div class="col-md-6 col-12">
+                    <%= form.label :username %>
+                    <%= form.text_field :username,
+                                        class: "form-control",
+                                        disabled: !@volunteer.new_record? %>
+                </div>
 
-      <div class="my-3">
-        <%= form.label :full_name, class: 'form-label' %>
-        <%= form.text_field :full_name, class: 'form-control' %>
-      </div>
+                <div class="col-md-6 col-12">
+                    <%= form.label :full_name, class: 'form-label' %>
+                    <%= form.text_field :full_name, class: 'form-control' %>
+                </div>
+            </div>
 
-      <div class="my-3">
-        <%= form.label :email, class: 'form-label' %>
-        <%= form.text_field :email, class: 'form-control' %>
-      </div>
+            <div class="my-3 row">
+                <div class="col-md-6 col-12">
+                    <%= form.label :email, class: 'form-label' %>
+                    <%= form.text_field :email, class: 'form-control' %>
+                </div>
 
-      <div class="my-3">
-        <%= form.label :phone_number, class: 'form-label' %>
-        <%= form.text_field :phone_number, class: 'form-control' %>
-      </div>
+                <div class="col-md-6 col-12">
+                    <%= form.label :phone_number, class: 'form-label' %>
+                    <%= form.text_field :phone_number, class: 'form-control' %>
+                </div>
+            </div>
 
-      <div class="my-3">
-        <%= form.label :address, class: 'form-label' %>
-        <%= form.text_field :address, class: 'form-control' %>
-      </div>
+            <div class="my-3 row">
+                <div class="col">
+                    <%= form.label :address, class: 'form-label' %>
+                    <%= form.text_field :address, class: 'form-control' %>
+                </div>
+            </div>
+            <div class="my-3 row">
+                <div class="col">
+                    <%= form.label :skills_interests, class: 'form-label' %>
+                    <%= form.textarea :skills_interests, class: 'form-control' %>
+                </div>
+            </div>
 
-      <div class="my-3">
-        <%= form.label :skills_interests, class: 'form-label' %>
-        <%= form.textarea :skills_interests, class: 'form-control' %>
-      </div>
+            <div class="my-3 row">
+                <div class="col-md-6 col-12">
+                    <%= form.label :password, class: 'form-label' %>
+                    <%= form.password_field :password, class: 'form-control' %>
+                </div>
 
-      <div class="my-3">
-        <%= form.label :password, class: 'form-label' %>
-        <%= form.password_field :password, class: 'form-control' %>
-      </div>
+                <div class="col-md-6 col-12">
+                    <%= form.label :password_confirmation, class: 'form-label' %>
+                    <%= form.password_field :password_confirmation, class: 'form-control' %>
+                </div>
+            </div>
 
-      <div class="my-3">
-        <%= form.label :password_confirmation, class: 'form-label' %>
-        <%= form.password_field :password_confirmation, class: 'form-control' %>
-      </div>
-
-        <div class="my-3 col-12">
-            <%= form.submit class: 'btn btn-primary col-5' %>
-            <%= link_to 'Cancel', (@volunteer.id ? volunteer_path(@volunteer) : volunteers_path), class: 'btn btn-danger col-5' %>
-        </div>
-    <% end %>
+            <div class="my-3 row">
+                <div class="col">
+                <%= form.submit class: 'btn btn-primary col-5' %>
+                <%= link_to 'Cancel', (@volunteer.id ? volunteer_path(@volunteer) : volunteers_path), class: 'btn btn-danger col-5' %>
+                </div>
+            </div>
+        <% end %>
     </div>
 </div>

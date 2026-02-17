@@ -16,7 +16,7 @@
                 </ul>
                 <div class="text-end">
                     <%=
-                    if @volunteer.nil? && @admin.nil?
+                    if (@volunteer.nil? || @volunteer.id.nil?) && @admin.nil?
                         render partial: 'global_components/notsignedin'
                     elsif @admin.nil?
                         render partial: 'global_components/signedin'
