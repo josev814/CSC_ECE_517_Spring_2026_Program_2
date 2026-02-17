@@ -23,6 +23,7 @@ class Event < ApplicationRecord
   }
 
   after_initialize :set_default_status, if: :new_record?
+  after_commit :update_status!, on: [ :create, :update ], if: :saved_change_to_required_volunteers?
 
   def open_for_signup?
     return false if completed?
@@ -38,7 +39,6 @@ class Event < ApplicationRecord
     volunteer.volunteer_assignments.find_by(event: self)
   end
 
-  # This creates a volunteer assignment for the given volunteer and event
   def volunteer_for(volunteer)
     return { ok: false, alert: "Volunteer not found." } if volunteer.nil?
     volunteer_assignment_for(volunteer)
@@ -60,6 +60,7 @@ class Event < ApplicationRecord
     end
   end
 
+  # This method cancels the volunteer assignment for the given volunteer and event
   def unvolunteer_for(volunteer)
     if volunteer.nil?
       return { ok: false, alert: "Volunteer not found." }
@@ -80,6 +81,12 @@ class Event < ApplicationRecord
 
   def event_time
     "#{start_time.strftime("%I:%M %p")} to #{end_time.strftime("%I:%M %p")}"
+  end
+
+  def update_status!
+    return if completed?
+    next_status = approved_volunteers >= required_volunteers.to_i ? :full : :open
+    update!(status: next_status) if status.to_sym != next_status
   end
 
   private
