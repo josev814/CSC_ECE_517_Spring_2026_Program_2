@@ -3,8 +3,10 @@
 <%= render @event %>
 
 <div>
-  <%= button_to "Volunteer", volunteer_event_path(@event), method: :post, class: "btn btn-primary" %>
-  <%= button_to "Unvolunteer", unvolunteer_event_path(@event), method: :delete, class: "btn btn-secondary" %>
+  <% if @volunteer.present? %>
+    <%= button_to "Volunteer", volunteer_event_path(@event), method: :post, class: "btn btn-primary" %>
+    <%= button_to "Unvolunteer", unvolunteer_event_path(@event), method: :delete, class: "btn btn-secondary" %>
+  <% end%>
   <%= link_to "Back", events_path %> |
   <%= link_to "Edit", edit_event_path(@event) %>
   <%= button_to "Delete", @event, method: :delete, data: { turbo_confirm: "Are you sure?" } %>
