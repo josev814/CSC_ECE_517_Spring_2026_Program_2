@@ -5,7 +5,9 @@
             <th scope="col">Volunteer</th>
             <th scope="col">Event</th>
             <th scope="col">Status</th>
+            <th scope="col">Hours Logged</th>
             <th scope="col">Created Date</th>
+            <th scope="col">Updated Date</th>
         </tr>
     </thead>
     <tbody>
@@ -23,8 +25,10 @@
             </td>
             <td><%= volunteer_assignment.volunteer.full_name %></td>
             <td><%= volunteer_assignment.event.title %></td>
-            <td class="col-2"><%= volunteer_assignment.status %></td>
+            <td class="col-1"><%= volunteer_assignment.status %></td>
+            <td><%= number_with_precision(volunteer_assignment.hours_worked, precision: 1) if volunteer_assignment.hours_worked.present? %></td>
             <td class="col-2"><%= volunteer_assignment.created_at.to_fs(:long) %></td>
+            <td class="col-2"><%= volunteer_assignment.updated_at.to_fs(:long) %></td>
         </tr>
     <% end %>
     </tbody>

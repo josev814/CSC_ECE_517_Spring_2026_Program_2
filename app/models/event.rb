@@ -24,6 +24,7 @@ class Event < ApplicationRecord
 
   after_initialize :set_default_status, if: :new_record?
   after_commit :update_status!, on: [ :create, :update ], if: :saved_change_to_required_volunteers?
+  after_update :cancel_pending_assignments_if_closed!
 
   def open_for_signup?
     return false if completed?
@@ -94,4 +95,12 @@ class Event < ApplicationRecord
   def set_default_status
     self.status ||= :open
   end
+
+  def cancel_pending_assignments_if_closed!
+    return unless saved_change_to_status?
+    return unless full? || completed?
+
+    volunteer_assignments.pending.update_all(status: "cancelled", updated_at: Time.current)
+  end
+  
 end
