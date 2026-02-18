@@ -5,6 +5,7 @@
             <th scope="col">Volunteer</th>
             <th scope="col">Event</th>
             <th scope="col">Status</th>
+            <th scope="col">Created Date</th>
         </tr>
     </thead>
     <tbody>
@@ -23,6 +24,7 @@
             <td><%= volunteer_assignment.volunteer.full_name %></td>
             <td><%= volunteer_assignment.event.title %></td>
             <td class="col-2"><%= volunteer_assignment.status %></td>
+            <td class="col-2"><%= volunteer_assignment.created_at.to_fs(:long) %></td>
         </tr>
     <% end %>
     </tbody>

@@ -4,7 +4,7 @@ class VolunteerAssignmentsController < ApplicationController
 
   # GET /volunteer_assignments or /volunteer_assignments.json
   def index
-    @volunteer_assignments = VolunteerAssignment.all
+    @volunteer_assignments = VolunteerAssignment.order('id DESC').all
   end
 
   # GET /volunteer_assignments/1 or /volunteer_assignments/1.json
