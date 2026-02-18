@@ -4,13 +4,9 @@
   <p class="text-danger">There are no events open for signup at this time. Check back soon! </p>
 <% end %>
 
-<div id="events">
-  <% @events.each do |event| %>
-    <%= render event %>
-    <p>
-      <%= link_to "Show this event", event %>
-    </p>
-  <% end %>
+<div id="events" class="col-12 justify-content-left">
+    <% if is_admin? %>
+        <%= link_to "New Event", new_event_path, class: "btn btn-primary" %>
+    <% end %>
+    <%= render partial: 'events/event_list' %>
 </div>
-
-<%= link_to "New Event", new_event_path %>

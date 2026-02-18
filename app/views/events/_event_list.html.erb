@@ -1,0 +1,38 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th scope="col">Title</th>
+            <th scope="col">Date</th>
+            <th scope="col">Location</th>
+            <th scope="col">Status</th>
+            <th scope="col">Volunteers</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% link_classes = "link-dark link-underline-opacity-0 link-underline-opacity-75-hover" %>
+        <% @events.each do |event| %>
+        <tr id="<%= dom_id event %>">
+            <td class="col-1">
+                <%= link_to event, class: link_classes do %>
+                    <i class="bi bi-eye-fill"></i> View
+                <% end %>
+                <% if is_admin? %>
+                    <br />
+                    <%= link_to event, class: link_classes, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } do %>
+                        <i class="bi bi-trash2-fill"></i> Delete
+                    <% end %>
+                <% end %>
+            </td>
+            <td><%= event.title %></td>
+            <td class="col-2"><%= event.event_date %></td>
+            <td class="col-2"><%= event.location %></td>
+            <td class="col-2"><%= event.status %></td>
+            <td class="col-2">
+                <%= event.approved_volunteers %> of
+                <%= event.required_volunteers %>
+            </td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>

@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   before_action :set_event, only: %i[ show edit update destroy volunteer unvolunteer ]
+  before_action :admin_access_only, only: %i[ new create edit update destroy ]
   before_action :require_volunteer, only: %i[ volunteer unvolunteer ]
 
   # GET /events or /events.json
