@@ -56,6 +56,11 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 
   gem 'faker', '~> 3.6.0'
+  # add rspec support
+  gem 'rspec-rails', '~>8.0'
+  gem 'cucumber'
+  gem 'capybara'
+  gem "selenium-webdriver"
 end
 
 group :development do
@@ -63,11 +68,12 @@ group :development do
   gem "web-console"
 end
 
-group :test do
-  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem "capybara"
-  gem "selenium-webdriver"
-end
+# moved to dev/test
+# group :test do
+#   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+#   gem "capybara"
+#   gem "selenium-webdriver"
+# end
 
 # commandline puma stats
 gem 'puma-status', '~>1.7'
