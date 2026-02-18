@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  resources :volunteer_assignments
   root "home#index"
+  resources :volunteer_assignments
   resources :volunteers
   resources :admins
   resources :events do
@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     delete :unvolunteer, on: :member
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+
+  get "/my_events", to: "volunteers#my_events", as: :my_events
 
   resources :sessions, only: [ :new, :create, :destroy ]
   get "signup", to: "volunteers#new"

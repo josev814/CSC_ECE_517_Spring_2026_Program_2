@@ -2,6 +2,9 @@ class VolunteersController < ApplicationController
   before_action :set_volunteer, only: %i[ show edit update destroy ]
   before_action :admin_access_only, only: %i[ index ]
   before_action :user_or_admin_access_only, only: %i[ show edit update destroy ]
+  before_action :require_volunteer_login, only: [:my_events]
+
+  
 
   # GET /volunteers or /volunteers.json
   def index
@@ -77,6 +80,21 @@ class VolunteersController < ApplicationController
     end
   end
 
+
+  def my_events
+    unless @volunteer
+      redirect_to login_path, alert: "You must be logged in."
+      return
+    end
+    @pending_assignments   = @volunteer.volunteer_assignments.where(status: "pending").includes(:event)
+    @approved_assignments  = @volunteer.volunteer_assignments.where(status: "approved").includes(:event)
+    @completed_assignments = @volunteer.volunteer_assignments.where(status: "completed").includes(:event)
+    @cancelled_assignments = @volunteer.volunteer_assignments.where(status: "cancelled").includes(:event)
+
+    @total_hours = @completed_assignments.sum(:hours_worked)
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_volunteer
@@ -129,4 +147,9 @@ class VolunteersController < ApplicationController
         redirect_to root_url, alert: "You are not authorized to access that."
       end
     end
+
+    def require_volunteer_login
+      redirect_to login_path unless session[:user_id]
+    end
+
 end

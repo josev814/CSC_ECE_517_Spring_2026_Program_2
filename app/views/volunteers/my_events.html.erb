@@ -1,0 +1,26 @@
+<h3>My Events</h3>
+
+<div class="alert alert-info">
+  <strong>Total Hours Volunteered:</strong>
+  <%= @total_hours || 0 %> hours
+</div>
+
+<hr>
+
+<h4>Pending</h4>
+<%= render partial: "events_table", locals: { assignments: @pending_assignments } %>
+
+<hr>
+
+<h4>Approved</h4>
+<%= render partial: "events_table", locals: { assignments: @approved_assignments } %>
+
+<hr>
+
+<h4>Completed</h4>
+<%= render partial: "events_table", locals: { assignments: @completed_assignments } %>
+
+<hr>
+
+<h4>Cancelled</h4>
+<%= render partial: "events_table", locals: { assignments: @cancelled_assignments } %>

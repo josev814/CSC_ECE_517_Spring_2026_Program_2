@@ -1,0 +1,49 @@
+<% if assignments.any? %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Event</th>
+        <th scope="col">Date</th>
+        <th scope="col">Status</th>
+        <th scope="col">Hours Logged</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% link_classes = 'link-dark link-underline-opacity-0 link-underline-opacity-75-hover' %>
+
+      <% assignments.each do |assignment| %>
+        <tr>
+          <!-- LEFT COLUMN WITH VIEW LINK -->
+          <td class="col-2">
+            <%= link_to volunteer_assignment_path(assignment.id), class: link_classes do %>
+              <i class="bi bi-eye-fill"></i> View Assignment
+            <% end %>
+          </td>
+
+          <td><%= link_to assignment.event.title, assignment.event , class: link_classes %></td>
+          <td class="col-2"><%= assignment.event.event_date %></td>
+
+          <td class="col-2">
+            <span class="badge bg-<%= 
+              case assignment.status
+              when "pending" then "warning"
+              when "approved" then "primary"
+              when "completed" then "success"
+              when "cancelled" then "danger"
+              else "secondary"
+              end
+            %>">
+              <%= assignment.status.capitalize %>
+            </span>
+          </td>
+
+          <td class="col-2"><%= assignment.hours_worked || "-" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No events in this category.</p>
+<% end %>
