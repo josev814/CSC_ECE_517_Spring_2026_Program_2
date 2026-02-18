@@ -47,4 +47,11 @@ The links here allow you to logout or view your profile.
 
 ---
 
+## Extra Gems Installed
+
+- Faker
+  - Used to generate random user data
+
+## Assignment Details
+
 [Assignment Information](https://github.com/jvargas6_ncstate/CSC_ECE_517_Spring_2026_Program_2/blob/main/ASSIGNMENT_README.md)
