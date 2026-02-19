@@ -9,27 +9,37 @@
     </thead>
     <tbody>
     <% link_classes='link-dark link-underline-opacity-0 link-underline-opacity-75-hover' %>
-    <% @volunteers.each do |volunteer| %>
-    <tr id="<%= dom_id volunteer %>" scope="row">
-        <td class="col-1">
-            <%= link_to volunteer, class: link_classes do %>
-                <i class="bi bi-eye-fill"></i> View
-            <% end %>
-            <br />
-            <%= link_to volunteer, class: link_classes, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } do %>
-                <i class="bi bi-trash2-fill"></i> Delete
-            <% end %>
-        </td>
+    <% if @volunteers.nil? || @volunteers.length.eql?(0) %>
+        <tr id="<%= dom_id volunteer %>" scope="row">
+            <td colspan="4" class="text-danger">No Volunteers Found</td>
+        </tr>
+    <% else %>
+        <% @volunteers.each do |volunteer| %>
+        <tr id="<%= dom_id volunteer %>" scope="row">
+            <td class="col-1">
+                <%= link_to volunteer, class: link_classes do %>
+                    <i class="bi bi-eye-fill"></i> View Profile
+                <% end %>
+                <br />
+                <%= link_to volunteer_assignments_path + "?user_id=#{volunteer.id}", class: link_classes do %>
+                    <i class="bi bi-intersect"></i> Assignments
+                <% end %>
+                <br />
+                <%= link_to volunteer, class: link_classes, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } do %>
+                    <i class="bi bi-trash2-fill"></i> Delete User
+                <% end %>
+            </td>
 
-        <td class="col-2"><%= volunteer.username %></td>
-        <td class="col-3">
-            <%= volunteer.full_name %>
-        </td>
+            <td class="col-2"><%= volunteer.username %></td>
+            <td class="col-3">
+                <%= volunteer.full_name %>
+            </td>
 
-        <td class="col">
-            <%= volunteer.skills_interests %>
-        </td>
-    </tr>
+            <td class="col">
+                <%= volunteer.skills_interests %>
+            </td>
+        </tr>
+        <% end %>
     <% end %>
     </tbody>
 </table>

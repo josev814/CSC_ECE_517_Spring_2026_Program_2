@@ -1,10 +1,16 @@
 class VolunteerAssignmentsController < ApplicationController
   before_action :ensure_dependencies_exist, only: [:new, :create]
   before_action :set_volunteer_assignment, only: %i[ show edit update destroy ]
+  before_action :admin_access_only
+  before_action :load_collections, only: %i[ new edit create update ]
 
   # GET /volunteer_assignments or /volunteer_assignments.json
   def index
-    @volunteer_assignments = VolunteerAssignment.order('id DESC').all
+    if params[:user_id]
+      @volunteer_assignments = VolunteerAssignment.where(volunteer: params[:user_id]).order(id: :desc).all
+    else
+      @volunteer_assignments = VolunteerAssignment.order(id: :desc).all
+    end
   end
 
   # GET /volunteer_assignments/1 or /volunteer_assignments/1.json
@@ -14,12 +20,10 @@ class VolunteerAssignmentsController < ApplicationController
   # GET /volunteer_assignments/new
   def new
     @volunteer_assignment = VolunteerAssignment.new
-    load_collections
   end
 
   # GET /volunteer_assignments/1/edit
   def edit
-    load_collections
   end
 
   # POST /volunteer_assignments or /volunteer_assignments.json
@@ -31,7 +35,6 @@ class VolunteerAssignmentsController < ApplicationController
         format.html { redirect_to @volunteer_assignment, notice: "Volunteer assignment was successfully created." }
         format.json { render :show, status: :created, location: @volunteer_assignment }
       else
-        load_collections
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @volunteer_assignment.errors, status: :unprocessable_entity }
       end
@@ -76,6 +79,7 @@ class VolunteerAssignmentsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_volunteer_assignment
+      # todo: when using find with an id that doesn't exist an ActiveRecord::RecordNotFound Exception is thrown
       @volunteer_assignment = VolunteerAssignment.find(params.expect(:id))
     end
 
@@ -88,5 +92,4 @@ class VolunteerAssignmentsController < ApplicationController
       @volunteers = Volunteer.all
       @events = Event.all
     end
-    
 end

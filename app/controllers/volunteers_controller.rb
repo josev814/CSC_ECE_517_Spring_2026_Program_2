@@ -118,22 +118,7 @@ class VolunteersController < ApplicationController
       params.require(:volunteer).permit(permitted)
     end
 
-    # checks if access is restricted to current user or admin
-    def user_or_admin_access_only
-      redirect = false
-      if is_admin?.eql?(false)
-        if session[:user_id].nil?
-          redirect = true
-        elsif session[:user_id].eql?(@volunteer.id).eql?(false)
-          redirect = true
-        end
-      end
-      if redirect
-        redirect_to root_url, alert: "You are not authorized to access that."
-      end
-    end
-
-    # checks if access is restricted to current user or admin
+    # Sets restricted access to current user of their own data or admin
     def user_or_admin_access_only
       redirect = false
       if is_admin?.eql?(false)

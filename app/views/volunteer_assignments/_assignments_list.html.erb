@@ -12,24 +12,36 @@
     </thead>
     <tbody>
     <% link_classes='link-dark link-underline-opacity-0 link-underline-opacity-75-hover' %>
-    <% @volunteer_assignments.each do |volunteer_assignment| %>
-        <tr id="<%= dom_id volunteer_assignment %>" scope="row">
-            <td class="col-1">
-                <%= link_to volunteer_assignment, class: link_classes do %>
-                    <i class="bi bi-eye-fill"></i> View
-                <% end %>
-                <br />
-                <%= link_to volunteer_assignment, class: link_classes, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } do %>
-                    <i class="bi bi-trash2-fill"></i> Delete
-                <% end %>
-            </td>
-            <td><%= volunteer_assignment.volunteer.full_name %></td>
-            <td><%= volunteer_assignment.event.title %></td>
-            <td class="col-1"><%= volunteer_assignment.status %></td>
-            <td><%= number_with_precision(volunteer_assignment.hours_worked, precision: 1) if volunteer_assignment.hours_worked.present? %></td>
-            <td class="col-2"><%= volunteer_assignment.created_at.to_fs(:long) %></td>
-            <td class="col-2"><%= volunteer_assignment.updated_at.to_fs(:long) %></td>
+    <% if @volunteer_assignments.nil? || @volunteer_assignments.length.eql?(0) %>
+        <tr id="no_assignments" scope="row">
+            <td colspan="5" class="text-danger">No Volunteer Assignments Found</td>
         </tr>
+    <% else %>
+        <% @volunteer_assignments.each do |volunteer_assignment| %>
+            <tr id="<%= dom_id volunteer_assignment %>" scope="row">
+                <td class="col-1">
+                    <%= link_to volunteer_assignment, class: link_classes do %>
+                        <i class="bi bi-eye-fill"></i> View
+                    <% end %>
+                    <br />
+                    <%= link_to volunteer_assignment, class: link_classes, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } do %>
+                        <i class="bi bi-trash2-fill"></i> Delete
+                    <% end %>
+                </td>
+                <td>
+                    <%=
+                        link_to volunteer_assignment.volunteer.full_name,
+                                volunteer_assignments_path + "?user_id=#{volunteer_assignment.volunteer.id}",
+                                class: link_classes
+                    %>
+                </td>
+                <td><%= volunteer_assignment.event.title %></td>
+                <td class="col-2"><%= volunteer_assignment.status %></td>
+                <td><%= number_with_precision(volunteer_assignment.hours_worked, precision: 1) if volunteer_assignment.hours_worked.present? %></td>
+                <td class="col-2"><%= volunteer_assignment.created_at.to_fs(:long) %></td>
+                <td class="col-2"><%= volunteer_assignment.updated_at.to_fs(:long) %></td>
+            </tr>
+        <% end %>
     <% end %>
     </tbody>
 </table>
