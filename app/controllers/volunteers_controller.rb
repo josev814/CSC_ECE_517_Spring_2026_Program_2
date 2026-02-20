@@ -109,11 +109,13 @@ class VolunteersController < ApplicationController
         :address,
         :phone_number,
         :skills_interests,
-        :password,
-        :password_confirmation
       ]
 
       permitted << :username if action_name == "create"
+      if action_name == 'create' || (action_name == 'update' && params[:volunteer][:password].present?)
+        permitted << :password
+        permitted << :password_confirmation
+      end
 
       params.require(:volunteer).permit(permitted)
     end

@@ -54,6 +54,11 @@
             </div>
 
             <div class="my-3 row">
+                <% if request.path.ends_with? '/edit' %>
+                <div class="text-danger">
+                    Only enter the password fields if you are wanting to update the password
+                </div>
+                <% end %>
                 <div class="col-md-6 col-12">
                     <%= form.label :password, class: 'form-label' %>
                     <%= form.password_field :password, class: 'form-control' %>
