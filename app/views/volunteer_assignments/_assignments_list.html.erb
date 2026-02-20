@@ -1,3 +1,8 @@
+<div class="row justify-content-end px-3">
+    <% if @hours_logged.nil?.eql?(false) %>
+    Pending Hours: <%= @hours_logged[:pending_hours] %> | Completed Hours: <%= @hours_logged[:completed_hours] %>
+    <% end %>
+</div>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -14,7 +19,7 @@
     <% link_classes='link-dark link-underline-opacity-0 link-underline-opacity-75-hover' %>
     <% if @volunteer_assignments.nil? || @volunteer_assignments.length.eql?(0) %>
         <tr id="no_assignments" scope="row">
-            <td colspan="5" class="text-danger">No Volunteer Assignments Found</td>
+            <td colspan="7" class="text-danger">No Volunteer Assignments Found</td>
         </tr>
     <% else %>
         <% @volunteer_assignments.each do |volunteer_assignment| %>

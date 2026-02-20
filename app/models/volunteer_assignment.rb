@@ -22,6 +22,13 @@ class VolunteerAssignment < ApplicationRecord
     end
   end
 
+  def self.hours_logged(user_id)
+    {
+      pending_hours: VolunteerAssignment.all.where(volunteer_id: user_id, status: 'approved').sum(:hours_worked),
+      completed_hours: VolunteerAssignment.all.where(volunteer_id: user_id, status: 'completed').sum(:hours_worked)
+    }
+  end
+
   def hours_valid
     return if hours_worked.blank?
 

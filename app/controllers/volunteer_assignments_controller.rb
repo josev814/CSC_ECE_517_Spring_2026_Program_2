@@ -8,6 +8,7 @@ class VolunteerAssignmentsController < ApplicationController
   def index
     if params[:user_id]
       @volunteer_assignments = VolunteerAssignment.where(volunteer: params[:user_id]).order(id: :desc).all
+      @hours_logged = VolunteerAssignment.hours_logged(params[:user_id])
     else
       @volunteer_assignments = VolunteerAssignment.order(id: :desc).all
     end
