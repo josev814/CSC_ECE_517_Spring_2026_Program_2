@@ -11,7 +11,8 @@ class AdminsController < ApplicationController
 
   # GET /admins/new
   def new
-    @admin = Admin.new
+    # @admin = Admin.new
+    redirect_to admins_path, alert: 'Access Denied'
   end
 
   # GET /admins/1/edit

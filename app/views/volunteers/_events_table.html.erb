@@ -17,8 +17,8 @@
         <tr>
           <!-- LEFT COLUMN WITH VIEW LINK -->
           <td class="col-2">
-            <%= link_to volunteer_assignment_path(assignment.id), class: link_classes do %>
-              <i class="bi bi-eye-fill"></i> View Assignment
+            <%= link_to event_path(assignment.event), class: link_classes do %>
+              <i class="bi bi-eye-fill"></i> View Event
             <% end %>
           </td>
 

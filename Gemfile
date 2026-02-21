@@ -58,9 +58,12 @@ group :development, :test do
   gem 'faker', '~> 3.6.0'
   # add rspec support
   gem 'rspec-rails', '~>8.0'
-  gem 'cucumber'
   gem 'capybara'
   gem "selenium-webdriver"
+  gem 'simplecov'
+  gem 'simplecov-json'
+  gem 'simplecov-html'
+  gem 'simplecov-console'
 end
 
 group :development do
@@ -69,11 +72,12 @@ group :development do
 end
 
 # moved to dev/test
-# group :test do
-#   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-#   gem "capybara"
-#   gem "selenium-webdriver"
-# end
+group :test do
+  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+  # gem "capybara"
+  # gem "selenium-webdriver"
+  gem "database_cleaner"
+end
 
 # commandline puma stats
 gem 'puma-status', '~>1.7'

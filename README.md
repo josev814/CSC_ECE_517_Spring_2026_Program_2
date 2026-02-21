@@ -51,7 +51,58 @@ The links here allow you to logout or view your profile.
 
 - Faker
   - Used to generate random user data
+- rspec-rails
+  - Used to run rspec rails tests
+- database_cleaner
+  - Used to erase the test db before seeding
+- simplecov (-json|-html|-console)
+  - Used to generate coverage reports
+
+## Rspec Testing
+To run Rspec Tests you run the below command from the root directory
+```bash
+bundle exec rspec ./test/
+```
+The console will show the coverage all code in the app directory
+
+simplecov-html and simplecov-json store their results in the coverage folder.
+
+### To view the html report
+In Rubymine:
+- Open the coverage folder
+- Right-Click index.html
+- Hover over "Open In" -> Browser
+- Click on "Built-in Preview"
+
+### To view the JSON report
+This report is meant when running tests for CI/CD
+
+- Open the Rubymine menu (sandwhich at the top right)
+- Hover Over View -> Tool Windows and click Coverage
+- A new window pane will appear on the right
+- Click on "Import a report collected in CI from disk"
+- Navigate to the project directory
+- Go to coverage and select .resultset.json
+- Now you can expand the coverage report folders
+- As you click on a file it will open the file
+  - What's highlighted in red are lines that don't have tests covering them
+
+### Generating tests with Capybara
+Under the test directory we have a folder called features.  This is where we keep the Capybara feature tests
+
+You can use the admin_tasks_spec.rb as an example of how to design tests.
+
+If you feel that you keep repeating steps
+- Create a function in shared_tasks for the steps.
+- Then you can call the function in your tests
+
+When describing a test, your user will not be logged in by default, so you will need to have a user login. 
+We perform this step in the admin_tasks_spec and volunteer_tasks_spec.
+
+
+[Capybara Cheatsheet](https://github.com/jvargas6_ncstate/CSC_ECE_517_Spring_2026_Program_2/blob/main/docs/CAPYBARA.md)
+
 
 ## Assignment Details
 
-[Assignment Information](https://github.com/jvargas6_ncstate/CSC_ECE_517_Spring_2026_Program_2/blob/main/ASSIGNMENT_README.md)
+[Assignment Information](https://github.com/jvargas6_ncstate/CSC_ECE_517_Spring_2026_Program_2/blob/main/docs/ASSIGNMENT_README.md)
