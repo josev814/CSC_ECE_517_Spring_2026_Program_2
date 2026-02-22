@@ -1,6 +1,6 @@
 <h3>Events</h3>
 
-<% if @events.none?(&:open?) %>
+<% if !is_admin? && @events.none?(&:open_for_signup?) %>
   <p class="text-danger">There are no events open for signup at this time. Check back soon! </p>
 <% end %>
 
