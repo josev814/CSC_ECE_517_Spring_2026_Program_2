@@ -1,5 +1,7 @@
 class SessionsController < ApplicationController
   def new
+    redirect_to root_path, alert: "You're already logged in" if @volunteer
+    redirect_to admins_path, alert: "You're already logged in" if is_admin?
   end
 
   def create
