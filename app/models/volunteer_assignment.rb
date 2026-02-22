@@ -7,6 +7,7 @@ class VolunteerAssignment < ApplicationRecord
 
   # Custom Validation for Event Completion
   validate :event_completion
+  validate :event_capacity
   # Custom Validation for Hours Worked
   validate :hours_valid
   validates :hours_worked, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
@@ -24,8 +25,8 @@ class VolunteerAssignment < ApplicationRecord
 
   def self.hours_logged(user_id)
     {
-      pending_hours: VolunteerAssignment.all.where(volunteer_id: user_id, status: 'approved').sum(:hours_worked),
-      completed_hours: VolunteerAssignment.all.where(volunteer_id: user_id, status: 'completed').sum(:hours_worked)
+      pending_hours: VolunteerAssignment.all.where(volunteer_id: user_id, status: "approved").sum(:hours_worked),
+      completed_hours: VolunteerAssignment.all.where(volunteer_id: user_id, status: "completed").sum(:hours_worked)
     }
   end
 
@@ -41,6 +42,19 @@ class VolunteerAssignment < ApplicationRecord
 
   def event_duration
     ((event.end_time - event.start_time) / 3600.0).round(2)
+  end
+
+  def event_capacity
+    return if event.nil?
+    return unless [ "approved", "completed" ].include?(status)
+
+    approved_count = event.volunteer_assignments.where(status: [ "approved", "completed" ])
+                               .where.not(id: id)
+                               .count
+
+    return unless approved_count >= event.required_volunteers.to_i
+
+    errors.add(:status, "Event has reached its required volunteer capacity")
   end
 
   after_initialize do
@@ -63,5 +77,12 @@ class VolunteerAssignment < ApplicationRecord
     return unless destroyed? || saved_change_to_status? || saved_change_to_event_id?
 
     event.update_status!
+  end
+
+  def entering_approved_state?
+    return true if new_record?
+    return false unless will_save_change_to_status?
+    previous_status = status_in_database
+    [ "approved", "completed" ].exclude?(previous_status)
   end
 end
