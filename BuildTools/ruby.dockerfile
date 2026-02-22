@@ -83,5 +83,5 @@ USER ruby
 
 COPY "BuildTools/entrypoint.sh" /
 
-ENTRYPOINT [ "/entrypoint.sh" ]
+ENTRYPOINT [ "bash", "/entrypoint.sh" ]
 CMD [ "bundle", "exec", "rails", "s", "-b", "0.0.0.0", "--port=3000", "-e", "$RAILS_ENV" ]
