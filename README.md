@@ -107,6 +107,22 @@ We perform this step in the admin_tasks_spec and volunteer_tasks_spec.
 
 [Assignment Information](https://github.com/jvargas6_ncstate/CSC_ECE_517_Spring_2026_Program_2/blob/main/docs/ASSIGNMENT_README.md)
 
+
+## User Instructions for Volunteers
+
+1. Once the homepage has been reached, volunteers can register an account or login to the system.
+
+2. For registration, prospective volunteers should be prepared to fill in typical fields (username, full name, email, password, etc).
+
+3. After registration/login, users may select the 'Events' Tab to see a list of all available events.
+
+4. The user can then click the 'View' button and be brought to the page to sign-up for the specific event. 
+
+5. The user can select 'Volunteer' and be treated to a banner indicating successful sign-up **if the event currently has space and pending approval of the site admin.** The user has the option of unvolunteering from the event from the same window. 
+
+6. The user can then navigate to "My Events" to track the status of the site admin's approval or cancellation of their assignment to the event. This status will be one of either: pending, approved, completed, or cancelled. These assignments depend on the status of the event and the admin's decisions on user assignment. 
+
+
 ## Admin Responsibilities and Tasks Guide
 The Admin holds the following responsibilities and abilities:
 - Manage Volunteer accounts
