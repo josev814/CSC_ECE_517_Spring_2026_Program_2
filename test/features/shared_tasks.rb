@@ -83,3 +83,19 @@ def registration_form(form, user: nil, name: nil, email: nil, phone: nil, addres
     click_button 'Create Volunteer'
   end
 end
+
+# Helper method to fill in the event form with default values, allowing overrides for specific fields
+def fill_event_form(title: "Food Drive", description: "Help distribute food.",
+                    location: "Community Center",
+                    event_date: Date.today + 7,
+                    start_time: "09:00",
+                    end_time: "11:00",
+                    required_volunteers: 3)
+  fill_in "Title", with: title
+  fill_in "Description", with: description
+  fill_in "Location", with: location
+  fill_in "Event date", with: event_date
+  fill_in "Start time", with: start_time
+  fill_in "End time", with: end_time
+  fill_in "Required volunteers", with: required_volunteers
+end

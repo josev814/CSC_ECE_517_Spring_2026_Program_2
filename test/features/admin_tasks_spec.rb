@@ -5,8 +5,8 @@ require './test/features/shared_tasks.rb'
 describe "create new admin", :type => :feature do
   it "try to access new admin" do
     visit new_admin_path
-    expect(page).to have_current_url  root_path
-    expect(page).to have_content "You do not have access to that page"
+    expect(page).to have_current_path(root_path)
+    expect(page).to have_content "Access Denied"
   end
 
   it "try to access new admin logged in" do
@@ -15,7 +15,7 @@ describe "create new admin", :type => :feature do
     login_form form_element, user: ADMIN_USER[:user], password: ADMIN_USER[:passwd]
     expect(page).to have_current_path admins_path
     visit new_admin_path
-    expect(page).to have_current_url  admins_path
+    expect(page).to have_current_path root_path
     expect(page).to have_content "Access Denied"
   end
 end
@@ -108,5 +108,89 @@ describe "volunteer actions", type: :feature do
     end
     expect(page).to have_content 'Volunteer was successfully updated.'
     expect(page).to have_current_path volunteer_path(BASE_VOLUNTEER[:id])
+  end
+end
+
+describe "events (admin coverage)", type: :feature do
+  before do
+    visit login_path
+    login_form find('form'), user: ADMIN_USER[:user], password: ADMIN_USER[:passwd]
+    expect(page).to have_current_path admins_path
+  end
+
+  it "admin sees New Event button on events index" do
+    visit events_path
+    expect(page).to have_link("New Event", href: new_event_path)
+  end
+
+  it "admin can reach New Event form" do
+    visit events_path
+    click_link "New Event"
+    expect(page).to have_current_path new_event_path
+    expect(page).to have_content "New Event"
+    expect(page).to have_selector("form")
+    # status is only shown for persisted events, so it should not appear on new
+    expect(page).to_not have_select("Status")
+  end
+
+  it "admin can create an event and view it from the list" do
+    visit new_event_path
+    within("form") do
+      fill_event_form(title: "Clothing Donation", event_date: Date.today + 10)
+      click_button "Create Event"
+    end
+
+    visit events_path
+    expect(page).to have_content("Clothing Donation")
+
+    row = find("tr", text: "Clothing Donation")
+    within(row) do
+      click_link "View"
+    end
+
+    # _event.html.erb content
+    expect(page).to have_content("Event Title:")
+    expect(page).to have_content("Clothing Donation")
+    expect(page).to have_content("Event Date:")
+    expect(page).to have_content("Event Time:")
+    expect(page).to have_content("Event Location:")
+    expect(page).to have_content("Event Status:")
+    expect(page).to have_content("Volunteers Needed:")
+    expect(page).to have_content("Volunteers Signed Up:")
+  end
+
+  it "admin sees validation errors when required volunteers is invalid" do
+    visit new_event_path
+    within("form") do
+      fill_event_form(title: "Invalid Volunteers", required_volunteers: 0)
+      click_button "Create Event"
+    end
+
+    expect(page).to have_content("prohibited this event from being saved")
+    expect(page).to have_content("Required volunteers")
+  end
+
+  it "admin sees a delete option for events (admin-only control)" do
+    visit new_event_path
+    within("form") do
+      fill_event_form(title: "Delete Me Event", event_date: Date.today + 11)
+      click_button "Create Event"
+    end
+
+    visit events_path
+    expect(page).to have_content("Delete Me Event")
+
+    row = find("tr", text: "Delete Me Event")
+    within(row) do
+      expect(page).to have_link("Delete")
+      end
+  end
+end
+
+describe "events access control (non-admin)", type: :feature do
+  it "non-admin does not see New Event or Delete on events index" do
+    visit events_path
+    expect(page).to_not have_link("New Event", href: new_event_path)
+    expect(page).to_not have_link("Delete")
   end
 end

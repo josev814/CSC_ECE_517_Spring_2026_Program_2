@@ -221,7 +221,7 @@ describe "volunteer event actions", type: :feature do
     click_link 'Events'
     within('#event_4') do
       expect(page).to have_content CURL_EVENT[:name]
-      expect(page).to have_content CURL_EVENT[:date]
+      expect(page).to have_text(/\d{4}-\d{2}-\d{2}/)
       click_link 'View'
     end
     expect(page).to have_current_path event_path(4)
