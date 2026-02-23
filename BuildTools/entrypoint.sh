@@ -23,6 +23,10 @@ done < <(find ./ -type f -name "Gemfile.lock.*" -mtime +2)
 sudo chown root:ruby /usr/local/bundle/ruby/3.4.0/
 sudo chmod 774 /usr/local/bundle/ruby/3.4.0
 
+if [ -d coverage ]; then
+  sudo chown -R ruby:ruby coverage
+fi
+
 echo "Running Bundle check"
 bundle check
 result=$?

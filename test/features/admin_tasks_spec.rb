@@ -39,8 +39,10 @@ describe "admin login process", type: :feature do
     # bad password test
     login_form form_element, password: Faker::Internet.password(special_characters: true)
     expect(page).to have_content 'Invalid Credentials'
-    expect(form_element).to have_field('session_username'), with: ADMIN_USER[:user]
-
+    within(form_element) do
+      username_field = find_field('session_username')
+      expect(username_field.value).to eq(ADMIN_USER[:user])
+    end
     # username is already filled in at this point
     login_form form_element, password: ADMIN_USER[:passwd]
 

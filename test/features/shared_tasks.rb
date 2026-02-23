@@ -8,7 +8,7 @@ BASE_VOLUNTEER = {
 
 CURL_EVENT = {
   name: 'Tutoring for Curl',
-  date: '2026-05-13',
+  date: '2026-05-16',
   start_time: '08:10 AM',
   end_time: '05:15 PM',
   location: 'Macejkovic University',
@@ -42,6 +42,24 @@ def generate_user
     skills_interests: skills.to_json
   })
   new_user
+end
+
+def register_new_user(user)
+  visit new_volunteer_path
+  form_element = find('form')
+  user = user[:user]
+  registration_form form_element, user: user[:username],
+                    name: user[:full_name],
+                    email: user[:email],
+                    pwd: user[:password],
+                    pwd2: user[:password],
+                    phone: user[:phone_number],
+                    address: user[:address],
+                    skills: user[:skills]
+
+  registered_user = Volunteer.find_by(username: user[:username])
+  user[:id] = registered_user.id
+  return user
 end
 
 def login_form(form, user: nil, password: nil)
