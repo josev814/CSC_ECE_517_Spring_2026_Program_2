@@ -32,7 +32,7 @@ Volunteers:
 
 ## Access the Website
 
-[Homepage](http://localhost:3000)
+[Homepage](http://152.7.177.202:8888/)
 
 ## Logging in
 
@@ -106,3 +106,83 @@ We perform this step in the admin_tasks_spec and volunteer_tasks_spec.
 ## Assignment Details
 
 [Assignment Information](https://github.com/jvargas6_ncstate/CSC_ECE_517_Spring_2026_Program_2/blob/main/docs/ASSIGNMENT_README.md)
+
+## Admin Responsibilities and Tasks Guide
+The Admin holds the following responsibilities and abilities:
+- Manage Volunteer accounts
+- Manage Events
+- Manage Volunteer Assignments
+
+### Logging In
+The Admin account is already created. To login, use the credentials defined in [Admin Credentials](#admin-credentials) section.
+### Managing Volunteers
+The admin can manage volunteer accounts by navigating to the Volunteers page. A link to this page is located on the navbar at the top of the page.
+#### Viewing a Volunteer Account
+1. Navigate to Volunteers page.
+2. Click on "View Profile" link next to volunteer.
+#### Creating a Volunteer Account
+1. Navigate to Volunteers page.
+2. Click on blue "New Volunteer" button.
+3. Fill out form for new volunteer account.
+4. Click on blue "Create Volunteer" button at the bottom of the form.
+#### Editing a Volunteer Account
+1. Navigate to Volunteers page.
+2. Click on the "View Profile" link next to the desired user.
+3. Click on blue "Edit" button.
+4. Edit desired information (Username is unavailable for edit).
+5. Click on blue "Update Volunteer" button to save volunteer details.
+#### Deleting a Volunteer Account
+1. Navigate to Volunteers page
+2. Click on "Delete User" link next to desired volunteer.
+3. Click "OK" when prompted by the "Are you sure?" pop-up confirmation.
+#### Viewing Volunteer Assignments from Volunteer Page
+1. Navigate to Volunteers page
+2. Click on "Assignments" link next to desired volunteer.
+
+The Admin can manage volunteer assignments from this link. Those actions are discussed in the Volunteer Assignments section.
+
+### Managing Events
+#### Creating an Event
+1. Navigate to Events page
+2. Click on blue "New Event" button
+3. Select desired details.
+4. Click on "Create Event" button.
+#### Editing an Event
+1. Navigate to Events page
+2. Click on "View" link next to the desired Event
+3. Click on yellow "Edit" button
+4. Modify desired details
+5. Click "Update Event" button at the end of the form.
+#### Deleting an Event
+1. Navigate to Events page
+2. Click on "Delete" link next to desired Event.
+3. Confirm deletion by selecting "OK" when prompted by the "Are you sure?" popup
+
+### Managing Volunteer Assignments
+Volunteer Assignments are used to track the relationship between a volunteer and an event.
+#### Creating a Volunteer Assignment
+While volunteer assignments are implictly created when a Volunteer signs up for an event, the admin can also create a volunteer assignment, thereby volunteering a user for an event.
+1. Navigate to Volunteer Assignments page
+2. Click on blue "New Volunteer Assignment" button
+3. Select desired volunteer, event, status, hours worked, and date logged.
+4. Click on blue "Add" button.
+#### Editing a Volunteer Assignment
+1. Navigate to Volunteer Assignments page
+2. Click on "View" link next to the desired Volunteer
+3. Click on blue "Edit" button
+4. Modify desired details
+5. Click blue "Add" button at the end of the form.
+#### Deleting a Volunteer Assignment
+1. Navigate to Volunteer Assignments page
+2. Click on "Delete" link next to desired Volunteer.
+3. Confirm deletion by selecting "OK" when prompted by the "Are you sure?" popup
+
+### Common Admin Workflow
+The Admin is responsible for managing the lifecycle of events and volunteer assignments. When an event is created (see [Creating an Event](#creating-an-event)), the status of the event will automatically move from "open" to "full" state once the Required Volunteer quota is met. The amount of Volunteers signed up will only increment once the admin edits a Volunteer Assignment (see [Editing a Volunteer Assignment](#editing-a-volunteer-assignment)) to move from "pending" to "approved" status.
+
+At any point, the Admin can move the state of the event from either "open" or "full" to "completed" by editing the Event (see [Editing an Event](#editing-an-event)).
+
+Once an event is completed, the Admin can move the Volunteer Assignment status from an "Approved" state to a "Completed" state (see [Logging Volunteer Hours (Admin Only)](#logging-volunteer-hours-admin-only) and/or [Editing a Volunteer Assignment](#editing-a-volunteer-assignment)).
+
+See the [Assignment Details](#assignment-details) section for more information on Admin responsibilities and restrictions.
+
