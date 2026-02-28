@@ -14,24 +14,29 @@
                 </div>
             <% end %>
 
+            <p class="text-muted">
+                <span class="text-danger">*</span> indicates fields are required
+            </p>
+
             <div class="row my-3">
                 <div class="col-md-6 col-12">
-                    <%= form.label :username %>
+                    <%= required_label(form, :username) %>
                     <%= form.text_field :username,
-                                        class: "form-control",
-                                        disabled: !@volunteer.new_record? %>
+                      class: "form-control",
+                      disabled: !@volunteer.new_record?,
+                      required: @volunteer.new_record? %>
                 </div>
 
                 <div class="col-md-6 col-12">
-                    <%= form.label :full_name, class: 'form-label' %>
-                    <%= form.text_field :full_name, class: 'form-control' %>
+                    <%= required_label(form, :full_name, "Full Name") %>
+                    <%= form.text_field :full_name, class: 'form-control', required: true %>
                 </div>
             </div>
 
             <div class="my-3 row">
                 <div class="col-md-6 col-12">
-                    <%= form.label :email, class: 'form-label' %>
-                    <%= form.text_field :email, class: 'form-control' %>
+                    <%= required_label(form, :email) %>
+                    <%= form.email_field :email, class: 'form-control', required: true %>
                 </div>
 
                 <div class="col-md-6 col-12">
@@ -60,13 +65,13 @@
                 </div>
                 <% end %>
                 <div class="col-md-6 col-12">
-                    <%= form.label :password, class: 'form-label' %>
-                    <%= form.password_field :password, class: 'form-control' %>
+                    <%= required_label(form, :password) %>
+                    <%= form.password_field :password, class: 'form-control', required: @volunteer.new_record? %>
                 </div>
 
                 <div class="col-md-6 col-12">
-                    <%= form.label :password_confirmation, class: 'form-label' %>
-                    <%= form.password_field :password_confirmation, class: 'form-control' %>
+                    <%= required_label(form, :password_confirmation, "Confirm Password") %>
+                    <%= form.password_field :password_confirmation, class: 'form-control', required: @volunteer.new_record? %>
                 </div>
             </div>
 
