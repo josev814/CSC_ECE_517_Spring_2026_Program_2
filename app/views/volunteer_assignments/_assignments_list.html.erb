@@ -1,4 +1,4 @@
-<div class="row justify-content-end px-3">
+<div class="row justify-content-end p-3">
     <% if @hours_logged.nil?.eql?(false) %>
     Pending Hours: <%= @hours_logged[:pending_hours] %> | Completed Hours: <%= @hours_logged[:completed_hours] %>
     <% end %>
@@ -16,6 +16,24 @@
         </tr>
     </thead>
     <tbody>
+        <tr id="filters" scope="row">
+            <td class="col-1">Filter Data:</td>
+            <td>
+                <% if @filtered.eql?(0) %>
+                    <%= select(VolunteerAssignment, :volunteer_id, Volunteer.all.collect {|v| [v.full_name, v.id]}, {include_blank: true}) %>
+                <% else %>
+                    <select name='VolunteerAssignment_volunteer_id' id='VolunteerAssignment_volunteer_id'>
+                        <option value="">Remove Filter</option>
+                        <option disabled><%= '-' * 10 %></option>
+                        <% Volunteer.all.collect.each do |volunteer| %>
+                            <option <%= (volunteer.id.eql?(@filtered.to_i)) ? 'selected':'' %> value="<%= volunteer.id %>"><%= volunteer.full_name %></option>
+                        <% end %>
+
+                    </select>
+                <% end %>
+            </td>
+            <td colspan="5"></td>
+        </tr>
     <% link_classes='link-dark link-underline-opacity-0 link-underline-opacity-75-hover' %>
     <% if @volunteer_assignments.nil? || @volunteer_assignments.length.eql?(0) %>
         <tr id="no_assignments" scope="row">
@@ -33,15 +51,20 @@
                         <i class="bi bi-trash2-fill"></i> Delete
                     <% end %>
                 </td>
-                <td>
-                    <%=
-                        link_to volunteer_assignment.volunteer.full_name,
-                                volunteer_assignments_path + "?user_id=#{volunteer_assignment.volunteer.id}",
-                                class: link_classes
-                    %>
-                </td>
+                <td><%= volunteer_assignment.volunteer.full_name %></td>
                 <td><%= volunteer_assignment.event.title %></td>
-                <td class="col-2"><%= volunteer_assignment.status %></td>
+                <td class="col-2">
+                    <%= volunteer_assignment.status %>
+                    <% if volunteer_assignment.status.eql? 'pending' %>
+                        <br />
+                        <%= button_to volunteer_assignment_path(volunteer_assignment),
+                                      params: {volunteer_assignment: {status: 'approved'} },
+                                      method: 'patch',
+                                      class: link_classes + ' btn-reset-styles mt-2' do %>
+                            <i class="bi bi-clipboard-check-fill"></i> Approve
+                        <% end %>
+                    <% end %>
+                </td>
                 <td><%= number_with_precision(volunteer_assignment.hours_worked, precision: 1) if volunteer_assignment.hours_worked.present? %></td>
                 <td class="col-2"><%= volunteer_assignment.created_at.to_fs(:long) %></td>
                 <td class="col-2"><%= volunteer_assignment.updated_at.to_fs(:long) %></td>
@@ -50,3 +73,9 @@
     <% end %>
     </tbody>
 </table>
+<script type="text/javascript">
+    volunteer_filter = document.querySelector('select#VolunteerAssignment_volunteer_id')
+    volunteer_filter.addEventListener('input', (event) => {
+        window.location = '<%= volunteer_assignments_path %>?user_id=' + event.target.value
+    })
+</script>

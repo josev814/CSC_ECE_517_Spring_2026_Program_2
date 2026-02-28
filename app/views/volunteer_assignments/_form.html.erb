@@ -1,6 +1,6 @@
 <div class="container-fluid justify-content-start">
     <div class="col-sm-4 col-12 ">
-        <%= form_with(model: volunteer_assignment) do |form| %>
+        <%= form_with(model: volunteer_assignment, id: 'new_volunteer_assignment_form') do |form| %>
           <% if volunteer_assignment.errors.any? %>
             <div style="color: red">
               <h2><%= pluralize(volunteer_assignment.errors.count, "error") %> prohibited this volunteer_assignment from being saved:</h2>

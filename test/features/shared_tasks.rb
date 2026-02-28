@@ -12,7 +12,8 @@ CURL_EVENT = {
   start_time: '08:10 AM',
   end_time: '05:15 PM',
   location: 'Macejkovic University',
-  needed: 2
+  needed: 2,
+  id: 4
 }
 
 ADMIN_USER = {
@@ -98,4 +99,26 @@ def fill_event_form(title: "Food Drive", description: "Help distribute food.",
   fill_in "Start time", with: start_time
   fill_in "End time", with: end_time
   fill_in "Required volunteers", with: required_volunteers
+end
+
+# Fills in the assignment form
+# @note the fields hash maps the function params automatically,
+#   this allows us to iterate the fields to enter if they're filled in more easily
+def assignment_form(form, volunteer_id: nil, event_id: nil, status: nil, hours_worked: nil, date_logged: nil)
+  prefix = 'volunteer_assignment_'
+  fields = { volunteer_id:, event_id:, status:, hours_worked:, date_logged: }
+  within(form) do
+    fields.each do |field, value |
+      case field
+      when :volunteer_id, :event_id, :status
+        # for select fields we find the value of the option and select it
+        if value.nil?.eql?(false)
+          find("##{prefix}#{field} option[value='#{value}']").select_option
+        end
+      else
+        fill_in "#{prefix}#{field}", with: value if value
+      end
+    end
+    click_button 'Add'
+  end
 end

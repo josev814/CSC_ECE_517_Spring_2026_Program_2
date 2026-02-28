@@ -6,8 +6,11 @@ class VolunteerAssignmentsController < ApplicationController
 
   # GET /volunteer_assignments or /volunteer_assignments.json
   def index
+    # if user_id isn't set this defaults to 0
+    @filtered = params[:user_id].to_i
     if params[:user_id]
       @volunteer_assignments = VolunteerAssignment.where(volunteer: params[:user_id]).order(id: :desc).all
+      ( @filtered.eql?(0) ? redirect_to(volunteer_assignments_path) : '')
       @hours_logged = VolunteerAssignment.hours_logged(params[:user_id])
     else
       @volunteer_assignments = VolunteerAssignment.order(id: :desc).all
@@ -46,7 +49,8 @@ class VolunteerAssignmentsController < ApplicationController
   def update
     respond_to do |format|
       if @volunteer_assignment.update(volunteer_assignment_params)
-        format.html { redirect_to @volunteer_assignment, notice: "Volunteer assignment was successfully updated.", status: :see_other }
+        redirection = ( request.referer.eql?(edit_volunteer_assignment_path) ? @volunteer_assignment : volunteer_assignments_path )
+        format.html { redirect_to redirection, notice: "Volunteer assignment was successfully updated.", status: :see_other }
         format.json { render :show, status: :ok, location: @volunteer_assignment }
       else
         format.html { render :edit, status: :unprocessable_entity }
