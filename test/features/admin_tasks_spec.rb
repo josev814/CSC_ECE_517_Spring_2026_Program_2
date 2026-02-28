@@ -185,6 +185,48 @@ describe "events (admin coverage)", type: :feature do
       expect(page).to have_link("Delete")
       end
   end
+
+  it "admin open/close from event page" do
+    event_name = 'Flip Event'
+    states = {
+      open: {btn: 'Mark Completed', state: 'open'},
+      completed: {btn: 'Re-Open', state: 'completed'}
+    }
+
+    visit new_event_path
+
+    within("form") do
+      fill_event_form(title: event_name, event_date: Date.today + 11)
+      click_button "Create Event"
+    end
+
+    visit events_path
+    expect(page).to have_content event_name
+
+    row = find("tr", text: event_name)
+    within(row) do
+      expect(page).to have_button states[:open][:btn]
+      click_button states[:open][:btn]
+    end
+
+    expect(page).to have_current_path events_path
+    expect(page).to have_content "The event #{event_name} was successfully updated."
+    row = find("tr", text: event_name)
+    within(row) do
+      expect(page).to have_content states[:completed][:state]
+      expect(page).to have_button states[:completed][:btn]
+      click_button states[:completed][:btn]
+    end
+
+    expect(page).to have_current_path events_path
+    expect(page).to have_content "The event #{event_name} was successfully updated."
+    row = find("tr", text: event_name)
+    within(row) do
+      expect(page).to have_content states[:open][:state]
+      expect(page).to have_content states[:open][:btn]
+    end
+
+  end
 end
 
 describe "events access control (non-admin)", type: :feature do

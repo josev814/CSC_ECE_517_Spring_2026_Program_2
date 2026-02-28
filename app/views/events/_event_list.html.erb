@@ -27,7 +27,25 @@
             <td><%= event.title %></td>
             <td class="col-2"><%= event.event_date %></td>
             <td class="col-2"><%= event.location %></td>
-            <td class="col-2"><%= event.status %></td>
+            <td class="col-2">
+                <%= event.status %>
+                <br />
+                <% if is_admin? %>
+                    <% update_state = (event.status.eql?('completed') ? 'open' : 'completed') %>
+                    <% update_icon = (event.status.eql?('completed') ? 'rewind-circle' : 'check-circle') %>
+                    <% update_msg = (event.status.eql?('completed') ? 'Re-Open' : 'Mark Completed') %>
+                    <%= button_to event_path(event),
+                            params: {event: {status: update_state} },
+                                  method: 'patch',
+                                  class: link_classes + ' btn-reset-styles',
+                            data: {
+                                turbo_confirm: 'Are you sure?'
+                            } do %>
+                        <i class="bi bi-<%= update_icon %>-fill"></i> <%= update_msg %>
+                    <% end %>
+                <% end %>
+                <br />
+            </td>
             <td class="col-2">
                 <%= event.approved_volunteers %> of
                 <%= event.required_volunteers %>

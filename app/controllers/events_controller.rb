@@ -41,10 +41,16 @@ class EventsController < ApplicationController
   end
 
   # PATCH/PUT /events/1 or /events/1.json
+  # @note If the request is from the events page we redirect to the events page otherwise we redirect to the event page.
   def update
     respond_to do |format|
       if @event.update(event_params)
-        format.html { redirect_to @event, notice: "Event was successfully updated.", status: :see_other }
+        redirection = ( edit_event_path.eql?(request.referer) ? @event : request.referer )
+        format.html {
+          redirect_to redirection,
+          notice: "The event #{@event.title} was successfully updated.",
+          status: :see_other
+        }
         format.json { render :show, status: :ok, location: @event }
       else
         format.html { render :edit, status: :unprocessable_entity }
