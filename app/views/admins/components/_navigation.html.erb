@@ -1,7 +1,11 @@
 <header class="px-3 py-2 text-bg-dark border-bottom">
+    <% navbarName='navbarAdmin' %>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <div class="container-fluid justify-content-lg-start">
-            <div class="collapse navbar-collapse">
+            <button class="navbar-toggler navbar-dark btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#<%= navbarName %>" aria-controls="<%= navbarName %>" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="<%= navbarName %>">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
                     <li>
                         <%= link_to admins_path, class: "nav-link", 'aria-current' => 'page' do %>
@@ -24,33 +28,26 @@
                         <% end %>
                     </li>
                 </ul>
-                <div class="text-end">
-                    <div class="collapse navbar-collapse text-end">
-                        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                            <li class="nav-item dropdown">
-                                <%= link_to "Welcome, #{@admin.name.titleize}", '#', class: "nav-link dropdown-toggle", 'data-bs-toggle' => "dropdown", 'aria-expanded' => "false" %>
-        <!--                    <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">-->
-        <!--                        <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">-->
-        <!--                    </a>-->
-                                <ul class="dropdown-menu text-small" style="">
-                                    <li>
-                                        <%= link_to @admin, class: "dropdown-item" do %>
-                                            <i class="bi bi-person-circle"></i> Profile
-                                        <% end %>
-                                    </li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li>
-                                        <%= link_to logout_path, class: "dropdown-item" do %>
-                                            Sign out
-                                        <% end %>
-                                    </li>
-                                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <%= link_to "Welcome, #{@admin.name.titleize}", '#', class: "nav-link dropdown-toggle", 'data-bs-toggle' => "dropdown", 'aria-expanded' => "false" %>
+                        <ul class="dropdown-menu dropdown-menu-end text-small">
+                            <li>
+                                <%= link_to @admin, class: "dropdown-item" do %>
+                                    <i class="bi bi-person-circle"></i> Profile
+                                <% end %>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <%= link_to logout_path, class: "dropdown-item" do %>
+                                    Sign out
+                                <% end %>
                             </li>
                         </ul>
-                    </div>
-                </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>

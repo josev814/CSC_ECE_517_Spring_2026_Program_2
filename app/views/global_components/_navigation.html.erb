@@ -1,7 +1,11 @@
 <header class="px-3 py-2 text-bg-dark border-bottom">
+    <% navbarName='navbarMain' %>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <button class="navbar-toggler navbar-dark btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#<%= navbarName %>" aria-controls="<%= navbarName %>" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
         <div class="container-fluid justify-content-lg-start">
-            <div class="collapse navbar-collapse">
+            <div class="collapse navbar-collapse"  id="<%= navbarName %>">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
                 <li>
                     <%= link_to root_path, class: "nav-link", 'aria-current' => 'page' do %>
@@ -23,17 +27,15 @@
                     </li>
                 <% end %>
                 </ul>
-                <div class="text-end">
-                    <%=
-                    if (@volunteer.nil? || @volunteer.id.nil?) && @admin.nil?
-                        render partial: 'global_components/notsignedin'
-                    elsif @admin.nil?
-                        render partial: 'global_components/signedin'
-                    else
-                        render partial: 'admins/components/navigation'
-                    end
-                    %>
-                </div>
+                <%=
+                if (@volunteer.nil? || @volunteer.id.nil?) && @admin.nil?
+                    render partial: 'global_components/notsignedin'
+                elsif @admin.nil?
+                    render partial: 'global_components/signedin'
+                else
+                    render partial: 'admins/components/navigation'
+                end
+                %>
             </div>
         </div>
     </nav>
