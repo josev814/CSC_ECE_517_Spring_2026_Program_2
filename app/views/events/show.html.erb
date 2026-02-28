@@ -4,8 +4,12 @@
 
 <div>
   <% if @volunteer.present? %>
-    <%= button_to "Volunteer", volunteer_event_path(@event), method: :post, class: "btn btn-primary" %>
-    <%= button_to "Unvolunteer", unvolunteer_event_path(@event), method: :delete, class: "btn btn-secondary" %>
+    <% assignment = @event.assignment_for_volunteer(@volunteer) %>
+    <% if assignment.present? && assignment.status != "cancelled" %>
+      <%= button_to "Unvolunteer", unvolunteer_event_path(@event), method: :delete, class: "btn btn-secondary" %>
+    <% else %>
+      <%= button_to "Volunteer", volunteer_event_path(@event), method: :post, class: "btn btn-primary" %>
+    <% end %>
   <% end %>
   <%= link_to "Back", events_path, class: "btn btn-secondary" %>
   <% if is_admin? %>

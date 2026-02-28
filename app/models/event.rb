@@ -11,7 +11,7 @@ class Event < ApplicationRecord
   validates :location, presence: true, length: { minimum: 4, maximum: 32 }
   validates :event_date, presence: true, comparison: { greater_than_or_equal_to: -> { Date.today } }
   validates :start_time, :status, presence: true
-  validates :required_volunteers, presence: true, numericality: { only_integer: true, greater_than: 0 }
+  validates :required_volunteers, presence: true, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 2_147_483_647 }
   validates :end_time, presence: true,
             comparison: { greater_than: :start_time,
             message: ->(record, data) { "must be set after the selected start time of #{record.start_time.strftime("%I:%M %p")}" },
@@ -35,14 +35,14 @@ class Event < ApplicationRecord
     approved_volunteers < required_volunteers.to_i
   end
 
-  def volunteer_assignment_for(volunteer)
+  def assignment_for_volunteer(volunteer)
     return false if volunteer.nil?
     volunteer.volunteer_assignments.find_by(event: self)
   end
 
   def volunteer_for(volunteer)
     return { ok: false, alert: "Volunteer not found." } if volunteer.nil?
-    volunteer_assignment_for(volunteer)
+    assignment_for_volunteer(volunteer)
     unless open_for_signup?
       return { ok: false, alert: "Signups are closed for this event." }
     end
@@ -102,5 +102,4 @@ class Event < ApplicationRecord
 
     volunteer_assignments.pending.update_all(status: "cancelled", updated_at: Time.current)
   end
-  
 end
