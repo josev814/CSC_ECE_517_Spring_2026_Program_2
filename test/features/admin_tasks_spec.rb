@@ -109,6 +109,14 @@ describe "volunteer actions", type: :feature do
     expect(page).to have_content 'Volunteer was successfully updated.'
     expect(page).to have_current_path volunteer_path(BASE_VOLUNTEER[:id])
   end
+
+  it 'delete volunteer and access' do
+    volunteer_id = 4
+    Volunteer.destroy(volunteer_id)
+    visit volunteer_path volunteer_id
+    expect(page).to have_current_path volunteers_path
+    expect(page).to have_content 'That volunteer could not be found.'
+  end
 end
 
 describe "events (admin coverage)", type: :feature do
@@ -234,5 +242,48 @@ describe "events access control (non-admin)", type: :feature do
     visit events_path
     expect(page).to_not have_link("New Event", href: new_event_path)
     expect(page).to_not have_link("Delete")
+  end
+end
+
+describe 'volunteer assignments', type: :feature do
+  before do
+    visit login_path
+    login_form find('form'), user: ADMIN_USER[:user], password: ADMIN_USER[:passwd]
+    expect(page).to have_current_path admins_path
+  end
+
+  it'assign volunteer to event' do
+    visit volunteer_assignments_path
+    expect(page).to have_current_path volunteer_assignments_path
+    # create new assignment button
+    within('#volunteer_assignments') do
+      click_link 'New Volunteer Assignment'
+    end
+    expect(page).to have_current_path new_volunteer_assignment_path
+    # assign a vounteer to an event
+    within('form') do
+      select(BASE_VOLUNTEER[:name], from: 'volunteer_assignment[volunteer_id]')
+      select(CURL_EVENT[:name], from: 'volunteer_assignment[event_id]')
+      click_button 'Add'
+    end
+    assignment_id = VolunteerAssignment.last.id
+    expect(page).to have_current_path volunteer_assignment_path assignment_id
+    expect(page).to have_content 'Volunteer assignment was successfully created.'
+  end
+
+  it 'accesses deleted volunteer assignment' do
+    assignment = VolunteerAssignment.create(
+      {
+        volunteer_id: Volunteer.last.id,
+        event_id: Event.last.id,
+        status: 'pending',
+        hours_worked: 0,
+        date_logged: ''
+      }
+    )
+    VolunteerAssignment.destroy assignment.id
+    visit volunteer_assignment_path assignment.id
+    expect(page).to have_current_path volunteer_assignments_path
+    expect(page).to have_content 'That volunteer assignment no longer exists'
   end
 end

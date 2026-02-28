@@ -98,7 +98,15 @@ class VolunteersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_volunteer
-      @volunteer = Volunteer.find(params.expect(:id))
+      begin
+        @volunteer = Volunteer.find(params.expect(:id))
+      rescue
+        if is_admin?
+          redirect_to volunteers_path, alert: 'That volunteer could not be found.'
+        else # this should never get hit except in a race condition where admin deletes a user and the user accesses their profile
+          redirect_to root_path, alert: 'Access Denied'
+        end
+      end
     end
 
     # Only allow a list of trusted parameters through.

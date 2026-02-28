@@ -84,8 +84,11 @@ class VolunteerAssignmentsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_volunteer_assignment
-      # todo: when using find with an id that doesn't exist an ActiveRecord::RecordNotFound Exception is thrown
-      @volunteer_assignment = VolunteerAssignment.find(params.expect(:id))
+      begin
+        @volunteer_assignment = VolunteerAssignment.find(params.expect(:id))
+      rescue
+        redirect_to volunteer_assignments_path, alert: 'That volunteer assignment no longer exists'
+      end
     end
 
     # Only allow a list of trusted parameters through.
