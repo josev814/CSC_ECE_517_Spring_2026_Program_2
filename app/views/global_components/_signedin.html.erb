@@ -1,6 +1,6 @@
 <ul class="navbar-nav">
     <li class="nav-item dropdown">
-        <%= link_to "Welcome, #{@volunteer.full_name}", '#', class: "nav-link dropdown-toggle", 'data-bs-toggle' => "dropdown", 'aria-expanded' => "false" %>
+        <%= link_to "#{@volunteer.full_name}", '#', class: "nav-link dropdown-toggle", 'data-bs-toggle' => "dropdown", 'aria-expanded' => "false" %>
         <ul class="dropdown-menu dropdown-menu-end text-small">
             <li>
                 <%= link_to @volunteer, class: "dropdown-item" do %>

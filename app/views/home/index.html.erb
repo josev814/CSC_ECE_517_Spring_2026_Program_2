@@ -1,4 +1,76 @@
-<%
-    content_for :title, 'Volunteer For An Event'
-    content_for :subtitle, 'Volunteer for an event and help out your community'
-%>
+<div class="p-5 mb-4 bg-light rounded-3 text-center">
+  <div class="container-fluid py-5">
+
+    <% if @volunteer.nil? %>
+      <h1 class="display-5 fw-bold">Make a Difference in Your Community!</h1>
+      <p class="fs-4">
+        Use the Register button to create an account and start volunteering today!
+      </p>
+    <% else %>
+      <h1 class="display-5 fw-bold">Welcome Back, <%= @volunteer.full_name %>!</h1>
+      <p class="fs-4">
+        Use the Dashboard to view your volunteer opportunities and track your impact.
+      </p>
+    <% end %>
+
+  </div>
+</div>
+
+
+<div class="container mb-5">
+  <div class="row g-4">
+
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title">
+            <i class="bi bi-calendar-event-fill text-primary me-2"></i>
+            Find Events
+          </h5>
+          <p class="card-text">
+            Browse upcoming volunteer opportunities and discover ways to give back.
+          </p>
+          <%= link_to "View Events", events_path, class: "btn btn-outline-primary" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title">
+            <i class="bi bi-person-check-fill text-success me-2"></i>
+            Sign Up
+          </h5>
+          <p class="card-text">
+            Join events and make an impact in your local community.
+          </p>
+          <% if @volunteer.nil? %>
+            <%= link_to "Get Started", signup_path, class: "btn btn-outline-success" %>
+          <% else %>
+            <%= link_to "My Events", my_events_path(@volunteer), class: "btn btn-outline-success" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title">
+            <i class="bi bi-award-fill text-warning me-2"></i>
+            Track Impact
+          </h5>
+          <p class="card-text">
+            Log your volunteer hours and track your contributions over time.
+          </p>
+          <% if @volunteer %>
+            <%= link_to "Dashboard", my_events_path(@volunteer), class: "btn btn-outline-dark" %>
+          <% else %>
+            <%= link_to "Learn More", events_path, class: "btn btn-outline-dark" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
