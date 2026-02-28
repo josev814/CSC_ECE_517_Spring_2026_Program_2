@@ -231,14 +231,11 @@ describe "volunteer event actions", type: :feature do
 
   it "volunteer and unvolunteer event" do
     visit event_path(4)
-    click_button 'Unvolunteer'
-    expect(page).to have_content 'You are not signed up for this event.'
+    expect(page).to_not have_button 'Unvolunteer'
 
     click_button 'Volunteer'
     expect(page).to have_content 'You have signed up for this event (pending approval).'
-
-    click_button 'Volunteer'
-    expect(page).to have_content 'You have already volunteered for this event.'
+    expect(page).to_not have_button 'Volunteer'
 
     click_link 'My Events'
     expect(page).to have_current_path my_events_path
