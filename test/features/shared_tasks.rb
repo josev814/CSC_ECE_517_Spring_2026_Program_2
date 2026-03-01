@@ -1,20 +1,16 @@
-BASE_VOLUNTEER = {
-  user: 'leopoldo',
-  name: 'Sen. Loren Brown',
-  passwd: 'xcCx1nZU5nQgY1r',
-  email: 'leopoldo@ncsu.edu',
-  id: '11'
-}
+# Pulls the last volunteer that we've seeded and creates it into a hash
+BASE_VOLUNTEER = Volunteer
+                   .select('id, username as user, full_name as name, email')
+                   .last
+                   .attributes
+                   .symbolize_keys
+BASE_VOLUNTEER[:passwd] = 'xcCx1nZU5nQgY1r'
 
-CURL_EVENT = {
-  name: 'Tutoring for Curl',
-  date: '2026-05-16',
-  start_time: '08:10 AM',
-  end_time: '05:15 PM',
-  location: 'Macejkovic University',
-  needed: 2,
-  id: 4
-}
+CURL_EVENT = Event
+  .select('id, title as name, event_date as date, start_time, end_time, location, required_volunteers as needed')
+  .last
+  .attributes
+  .symbolize_keys
 
 ADMIN_USER = {
   user: 'gussie',
@@ -22,6 +18,7 @@ ADMIN_USER = {
   passwd: 'qVusjy8n1GqxID'
 }
 
+# Generates a new user using Faker for us to use
 def generate_user
   new_user = Faker::Internet.user('username', 'password')
   skills = []
@@ -38,11 +35,16 @@ def generate_user
   new_user.merge!({
     full_name: Faker::Name.name,
     email: "#{new_user[:username]}@ncsu.edu",
-    phone_number: Faker::PhoneNumber.phone_number,
+    phone_number: get_compatible_faker_phone_number,
     address: Faker::Address.full_address,
     skills_interests: skills.to_json
   })
   new_user
+end
+
+# @note This removes the " x2345" from the end of phone numbers
+def get_compatible_faker_phone_number
+  Faker::PhoneNumber.phone_number.split(' x')[0]
 end
 
 def register_new_user(user)

@@ -96,7 +96,7 @@ describe "new volunteer", :type => :feature do
 
   describe 'with new volunteer' do
     before :context do
-      @new_phone = Faker::PhoneNumber.phone_number
+      @new_phone = get_compatible_faker_phone_number
       @current_user = register_new_user user:@user
     end
 
@@ -263,7 +263,7 @@ describe "volunteer logout process", type: :feature do
     expect(page).to have_current_path root_path
     expect(page).to_not have_content BASE_VOLUNTEER[:name]
 
-    visit volunteer_path(11)
+    visit volunteer_path(BASE_VOLUNTEER[:id].to_i)
     expect(page).to have_content 'You are not authorized to access that.'
     expect(page).to have_current_path root_path
   end

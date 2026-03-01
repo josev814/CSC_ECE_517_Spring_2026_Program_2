@@ -100,7 +100,7 @@ describe "volunteer actions", type: :feature do
   end
 
   it 'update volunteer phone number' do
-    phone_number = Faker::PhoneNumber.phone_number
+    phone_number = get_compatible_faker_phone_number
     visit edit_volunteer_path(BASE_VOLUNTEER[:id])
     within('form') do
       fill_in 'volunteer_phone_number', with: phone_number
