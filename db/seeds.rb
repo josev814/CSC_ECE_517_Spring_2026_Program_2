@@ -64,7 +64,7 @@ sqlite_primarykey_reset!(Volunteer.table_name)
   volunteer.merge!({
     full_name: Faker::Name.name,
     email: "#{volunteer[:username]}@ncsu.edu",
-    phone_number: Faker::PhoneNumber.phone_number,
+    phone_number: Faker::PhoneNumber.phone_number.split(' x')[0],
     address: Faker::Address.full_address,
     skills_interests: skills.to_json
   })
