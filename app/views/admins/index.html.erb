@@ -1,9 +1,87 @@
 <p style="color: green"><%= notice %></p>
 
-<% content_for :title, "Dashboard" %>
+<% content_for :title, "Admin Dashboard" %>
 
-<div id="admins">
-    <div class="widget" id="top_volunteers">
-        Top Volunteers
+<div class="p-5 mb-4 bg-light rounded-3 text-center">
+  <div class="container-fluid py-5">
+    <h1 class="display-5 fw-bold">
+      Welcome Back, <%= @admin&.name&.titleize %>!
+    </h1>
+    <p class="fs-4">
+      Use your dashboard to manage events, volunteers, and community engagement.
+    </p>
+  </div>
+</div>
+
+
+<div class="container mb-5">
+  <div class="row g-4">
+
+    <!-- Events Panel -->
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title">
+            <i class="bi bi-calendar-event-fill text-primary me-2"></i>
+            Events
+          </h5>
+
+          <p class="card-text text-muted">
+            Create, edit, and manage volunteer opportunities across your organization.
+            Update event status, adjust required volunteers, and monitor participation.
+          </p>
+
+          <p class="card-text text-muted small">
+            This section helps ensure that events remain organized, fully staffed, and aligned
+            with your organization’s mission and scheduling needs.
+          </p>
+        </div>
+      </div>
     </div>
+
+    <!-- Volunteers Panel -->
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title">
+            <i class="bi bi-people-fill text-success me-2"></i>
+            Volunteers
+          </h5>
+
+          <p class="card-text text-muted">
+            View volunteer profiles, track engagement, and manage account information.
+            Understand the skills, interests, and availability of your volunteer base.
+          </p>
+
+          <p class="card-text text-muted small">
+            Maintaining accurate volunteer data helps improve communication,
+            engagement, and long-term retention.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Volunteer Assignments Panel -->
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body text-center">
+          <h5 class="card-title">
+            <i class="bi bi-intersect text-warning me-2"></i>
+            Volunteer Assignments
+          </h5>
+
+          <p class="card-text text-muted">
+            Review pending requests, approve volunteers, and track participation.
+            Log and verify hours to ensure accurate reporting and impact tracking.
+          </p>
+
+          <p class="card-text text-muted small">
+            Effective assignment management helps balance workloads,
+            improve event success, and recognize volunteer contributions.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>

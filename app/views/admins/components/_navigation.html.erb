@@ -30,7 +30,7 @@
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
-                        <%= link_to "Welcome, #{@admin.name.titleize}", '#', class: "nav-link dropdown-toggle", 'data-bs-toggle' => "dropdown", 'aria-expanded' => "false" %>
+                        <%= link_to "#{@admin.name.titleize}", '#', class: "nav-link dropdown-toggle", 'data-bs-toggle' => "dropdown", 'aria-expanded' => "false" %>
                         <ul class="dropdown-menu dropdown-menu-end text-small">
                             <li>
                                 <%= link_to @admin, class: "dropdown-item" do %>
